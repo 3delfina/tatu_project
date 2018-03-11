@@ -1,0 +1,4 @@
+Within your main project folder you should include a file called requirements.txt that
+can be used to install the relevant packages within a newly-created virtual environment
+using pip install –r requirements.txt. You can create this file easily using pip
+freeze > requirements.txt.
