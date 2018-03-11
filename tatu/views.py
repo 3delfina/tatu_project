@@ -4,15 +4,15 @@ from django.http import HttpResponse
 
 def index(request):
     context_dict = {}
-    return HttpResponse("""Home page (index). Have a template does not exist problem
-                        when using render(). Help!
-    			<br/> <a href='/tatu/contact-us/'>Contact us</a>
-			<br/> <a href='/tatu/FAQ/'>FAQ page</a>
-			<br/> <a href='/tatu/register/'>Register page</a>
-			<br/> <a href='/tatu/login/'>Login page</a>
-			<br/> <a href='/tatu/artists/'>Artists page</a>
-			<br/> <a href='/tatu/tattoos/'>Tattoos page</a>""")
-        #return render(request, 'tatu/index.html', context=context_dict)
+    #return HttpResponse("""Home page (index). Have a template does not exist problem
+               #         when using render(). Help!
+    		#	<br/> <a href='/tatu/contact-us/'>Contact us</a>
+		#	<br/> <a href='/tatu/FAQ/'>FAQ page</a>
+		#	<br/> <a href='/tatu/register/'>Register page</a>
+		#	<br/> <a href='/tatu/login/'>Login page</a>
+		#	<br/> <a href='/tatu/artists/'>Artists page</a>
+		#	<br/> <a href='/tatu/tattoos/'>Tattoos page</a>""")
+    return render(request, 'tatu/index.html', context=context_dict)
 
 #def about(request):
 #    return HttpResponse("""About page
