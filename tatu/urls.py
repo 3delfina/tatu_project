@@ -19,7 +19,7 @@ from tatu import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),  # home page
-    url(r'^about/$', views.about, name='about'),
+    #url(r'^about/$', views.about, name='about'),
     url(r'^contact-us/$', views.contact, name='contact'),
     url(r'^FAQ/$', views.faq, name='faq'),
     url(r'^register/$', views.register, name='register'),
