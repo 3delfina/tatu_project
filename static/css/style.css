@@ -17,23 +17,25 @@ body {
 }
 span {
     display: inline-block;
-}
-img {
-    width: 80%;
-}
-div{
+    img {width: 80%;
+                          } }
+
+div {
     height: auto; /*if more info comes on the page, it will stretch down*/
-    width: 1000px;
+    width: 100%;
     margin: 0 auto; /*this will cause the div to be in the center*/
 }
 div.botline{
-    position: relative;
+    position: absolute;
+    text-align: center;
 
-    top: 550px;
-
-
-
-
+    top: 80%;
+}
+div.midbox{
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    top: 30%;
 }
 div.topbox{
 
@@ -41,9 +43,9 @@ div.topbox{
     height: 100px;
     box-sizing: content-box;
     border: 2px solid black;
-    position: relative;
-    left: -32%;
-    top: 0%;
+    position: absolute;
+    left: 10%;
+    top: 17%;
     
     font-size: 35px;
     text-align: center;

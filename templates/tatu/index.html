@@ -21,15 +21,15 @@
     <div class="container">
         <div class="topbox">TOP OF THE DAY</div></div>
 
+    <div class="midbox">
+    {% for image in images %}
+        <img src="{{ MEDIA_URL }}{{ image }}" class="img-thumbnail"  width="25%" height="25%">
+        {% endfor %}</div>
 
 
 
+  <div class="botline">
 
-
-    <center> <div class="botline">
-        {% for image in images %}
-        <img src="{{ MEDIA_URL }} {{ image.image.url }}" />
-        {% endfor %}
 
 		<ul class="list-inline">
 			<li> <a href='/tatu/contact-us/'>Contact us</a></li>
@@ -45,7 +45,7 @@
 			<li> <a href='/tatu/tattoos/'>Tattoos </a></li>
 
 		</ul>
-	</div></center>
+	</div>
 
 	</body>
 	
