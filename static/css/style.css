@@ -1,4 +1,41 @@
 html { background: transparent; }
 body {
-    background-color: blue;
+    background-color: white;
+    background-image:
+    linear-gradient(
+            to bottom,
+            #f2f2f4,
+            #f2f2f4 22.5%,
+            #e0e1e5 22.5%,
+            #e0e1e5 75%,
+            #f2f2f4 70%
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+span {
+    display: inline-block;
+}
+img {
+    width: 80%;
+}
+div.botline{
+    position: relative;
+
+    top: 550px;
+
+}
+div.topbox{
+
+    width: 300px;
+    height: 100px;
+    box-sizing: content-box;
+    border: 2px solid black;
+    position: relative;
+    left: -32%;
+    top: 0%;
+    font-size: 35px;
+    text-align: center;
+
+    line-height: 300%;
 }
