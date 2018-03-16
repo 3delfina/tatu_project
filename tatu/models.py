@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from uuid import UUID
 
-#RANGO MODELS.PY FILE BELOW
 #class Category(models.Model):
 #    name = models.CharField(max_length=128, unique=True)
 #    views = models.IntegerField(default=0)
@@ -43,7 +43,6 @@ class Page(models.Model):
     url = models.CharField(max_length=100)
     
 class UserProfile(models.Model):
-    #user = models.OneToOneField(User)
     fullname = models.CharField(max_length=30)
     username = models.CharField(max_length=30, unique=True)
     password = models.CharField(max_length=30) #(does password belong here?)
@@ -55,6 +54,13 @@ class UserProfile(models.Model):
 
     #def __str__(self):
         #return self.user.username #(?)
+
+class UserImage(models.Model):
+    tattoos = models.ForeignKey(UserProfile, 
+                                related_name='images', 
+                                on_delete=models.DO_NOTHING,
+                                )
+    image = models.ImageField()
 
 class Picture(models.Model):
     #user = models.ForeignKey(User)

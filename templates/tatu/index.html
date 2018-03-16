@@ -26,7 +26,10 @@
 
 
 
-	<center> <div class="botline">
+    <center> <div class="botline">
+        {% for image in images %}
+        <img src="{{ MEDIA_URL }} {{ image.image.url }}" />
+        {% endfor %}
 
 		<ul class="list-inline">
 			<li> <a href='/tatu/contact-us/'>Contact us</a></li>

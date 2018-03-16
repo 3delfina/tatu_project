@@ -7,14 +7,8 @@ from django.conf import settings
 
 def index(request):
     context_dict = {}
-    #return HttpResponse("""Home page (index). Have a template does not exist problem
-               #         when using render(). Help!
-    		#	<br/> <a href='/tatu/contact-us/'>Contact us</a>
-		#	<br/> <a href='/tatu/FAQ/'>FAQ page</a>
-		#	<br/> <a href='/tatu/register/'>Register page</a>
-		#	<br/> <a href='/tatu/login/'>Login page</a>
-		#	<br/> <a href='/tatu/artists/'>Artists page</a>
-		#	<br/> <a href='/tatu/tattoos/'>Tattoos page</a>""")
+    image_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media'))
+    context_dict['images'] = image_list
     return render(request, 'tatu/index.html', context=context_dict)
 
 #def about(request):
@@ -22,6 +16,8 @@ def index(request):
 #    <a href="/tatu/">Index</a>""")
 
 
+    #user = UserProfile.objects.get(pk=1)
+    #image_list = user.images.all()
 
 def contact(request):
     return HttpResponse("""Contact us page
