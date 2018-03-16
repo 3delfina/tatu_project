@@ -34,8 +34,10 @@ div.topbox{
     position: relative;
     left: -32%;
     top: 0%;
+    
     font-size: 35px;
     text-align: center;
 
     line-height: 300%;
+
 }

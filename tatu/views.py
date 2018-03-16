@@ -1,5 +1,8 @@
+import os
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.conf import settings
+
 # Create your views here.
 
 def index(request):
@@ -17,6 +20,8 @@ def index(request):
 #def about(request):
 #    return HttpResponse("""About page
 #    <a href="/tatu/">Index</a>""")
+
+
 
 def contact(request):
     return HttpResponse("""Contact us page
