@@ -46,7 +46,7 @@ class UserProfile(models.Model):
     #user = models.OneToOneField(User)
     fullname = models.CharField(max_length=30)
     username = models.CharField(max_length=30, unique=True)
-    password = models.CharField(max_length=30)
+    password = models.CharField(max_length=30) #(does password belong here?)
     picture = models.ImageField(blank=True)
     workplace = models.CharField(max_length=100, blank=True)
     phone_no = models.IntegerField(blank=True)
