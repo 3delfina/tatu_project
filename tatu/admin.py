@@ -1,14 +1,17 @@
 from django.contrib import admin
-from tatu.models import Page, UserProfile, Picture, Comment
+from tatu.models import * 
 
 
 # Register your models here.
 admin.site.register(Page)
-admin.site.register(UserProfile)
 admin.site.register(Picture)
 admin.site.register(Comment)
 
-#class PageAdmin(admin.ModelAdmin):
-#    list_display = ('title', 'category', 'url')
+class UserImageInline(admin.TabularInline):
+    model = UserImage
+    extra = 3
 
-#admin.site.register(Page, PageAdmin)
+class UserAdmin(admin.ModelAdmin):
+    inlines = [ UserImageInline, ]
+
+admin.site.register(UserProfile, UserAdmin)
