@@ -1,72 +1,47 @@
 from django.db import models
 from django.contrib.auth.models import User
-from uuid import UUID
+from django.core.validators import RegexValidator
 
-#class Category(models.Model):
-#    name = models.CharField(max_length=128, unique=True)
-#    views = models.IntegerField(default=0)
-#    likes = models.IntegerField(default=0)
-#    slug = models.SlugField(unique=True)
-
-#    def save(self, *args, **kwargs):
-#        self.slug = slugify(self.name)
-#        super(Category, self).save(*args, **kwargs)
-
-#    class Meta:
-#        verbose_name_plural = 'categories'
-
-#    def __str__(self):
-#        return self.name
-
-
-#class Page(models.Model):
-#    category = models.ForeignKey(Category)
-#    title = models.CharField(max_length=128)
-#    url = models.URLField()
-#    views = models.IntegerField(default=0)
-
-#    def __str__(self):
-#        return self.title
-
-#class UserProfile(models.Model):
-#    user = models.OneToOneField(User)
-#    website = models.URLField(blank=True)
-#    picture = models.ImageField(upload_to="profile_images", blank=True)
-#    
-#    def __str__(self):
-#        return self.user.username
-
-# IDs are automatically used according to django docs, so no need to add id fields manually
 
 class Page(models.Model):
     #user = models.ForeignKey(User)
     url = models.CharField(max_length=100)
+
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
     
+
 class UserProfile(models.Model):
-    fullname = models.CharField(max_length=30)
-    username = models.CharField(max_length=30, unique=True)
-    password = models.CharField(max_length=30) #(does password belong here?)
-    picture = models.ImageField(blank=True)
+    # This maps each UserProfile to have a field that inherits from the User Model
+    # The User Model has username, password, email etc fields already associated with it
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    # field for user avatar, defaults to /media/default/avatar.png
+    avatar = models.ImageField(upload_to=user_directory_path, 
+                               default='default/avatar.png')
+    # Self Explanatory extraneous fields
     workplace = models.CharField(max_length=100, blank=True)
-    phone_no = models.IntegerField(blank=True)
-    website = models.CharField(max_length=100, blank=True)
-    email = models.CharField(max_length=30, blank=True)
+    website = models.URLField(blank=True)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
-    #def __str__(self):
-        #return self.user.username #(?)
+    # for whenever a method in a view etc calls str() on this object
+    def __str__(self):
+        return self.user.username
 
-class UserImage(models.Model):
-    tattoos = models.ForeignKey(UserProfile, 
-                                related_name='images', 
-                                on_delete=models.DO_NOTHING,
-                                )
-    image = models.ImageField()
 
-class Picture(models.Model):
-    #user = models.ForeignKey(User)
-    tattoo_picture = models.ImageField()
-    tag = models.CharField(max_length=30)
-    rating = models.IntegerField()
+# TATTOO MODEL WIP, PLEASE DONT TOUCH!
+
+#class Tattoo(models.Model):
+#    user = models.ForeignKey(User, related_name='images')
+#    image = models.ImageField()
+#    description = model.TextField()
+#    tag = models.CharField(max_length=30)
+#    rating = models.IntegerField()
+#    favourites = models.IntegerField()
+
 
 class Comment(models.Model):
     #user = models.ForeignKey(User)
