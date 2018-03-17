@@ -14,11 +14,8 @@ body {
     );
     background-repeat: no-repeat;
     background-attachment: fixed;
-}
-span {
-    display: inline-block;
-    img {width: 80%;
-                          } }
+}}
+
 
 div {
     height: auto; /*if more info comes on the page, it will stretch down*/
@@ -30,12 +27,16 @@ div.botline{
     text-align: center;
 
     top: 80%;
+    left:35%
+
 }
 div.midbox{
     position: absolute;
     display: inline-block;
     text-align: center;
-    top: 30%;
+    top: 35%;
+    left: 10%;
+    right: 10%;
 }
 div.topbox{
 
@@ -46,6 +47,7 @@ div.topbox{
     position: absolute;
     left: 10%;
     top: 17%;
+
     
     font-size: 35px;
     text-align: center;
@@ -53,3 +55,6 @@ div.topbox{
     line-height: 300%;
 
 }
+div.title{
+
+ }

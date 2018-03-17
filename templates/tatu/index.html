@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="{% static "css/style.css" %} ">
@@ -15,20 +16,25 @@
 	</head>
 	
 	<body>
-	<center><div class="container"><span><img src="{% static "images/logo.png" %} " alt="logo"></span></div></center>
+	<center><div ><img src="{% static "images/logo.png" %} " alt="logo" width="15%"></div></center>
 
 
     <div class="container">
         <div class="topbox">TOP OF THE DAY</div></div>
 
     <div class="midbox">
-    {% for image in images %}
-        <img src="{{ MEDIA_URL }}{{ image }}" class="img-thumbnail"  width="25%" height="25%">
-        {% endfor %}</div>
+
+            {% for image in images %}
+
+
+                    <img src="{{ MEDIA_URL }}{{ image }}"  class="img-thumbnail" width="25%" height="25%">
+
+                {% endfor %}
+		</div>
 
 
 
-  <div class="botline">
+    <center>  <div class="botline">
 
 
 		<ul class="list-inline">
@@ -45,7 +51,7 @@
 			<li> <a href='/tatu/tattoos/'>Tattoos </a></li>
 
 		</ul>
-	</div>
+	</div></center>
 
 	</body>
 	
