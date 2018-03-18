@@ -8,8 +8,7 @@ from imagekit.processors import ResizeToFill
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('image', 'category', 'description',)
-        exclude = ('author',)
+        fields = ('image', 'category', 'description')
 
 # Base User Form to be instantiated by the login and register view
 # Demands username, password, email, first and last names

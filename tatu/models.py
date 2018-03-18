@@ -73,6 +73,8 @@ class Post(models.Model):
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE,
                                related_name='author',
+                               default='admin'
+
                                )
     image = ProcessedImageField(upload_to=user_image_path,
                                 processors=[ResizeToFill(1000, 1000)],

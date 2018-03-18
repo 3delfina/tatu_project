@@ -17,8 +17,13 @@ from .forms import ContactForm
 
 def index(request):
     context_dict = {}
-    image_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media'))[0:3]
-    context_dict['images'] = image_list
+    test = Post.objects.all().order_by('-favourites').values_list('image', flat=True)
+    test = list(test)
+    print(test)
+#    image_list = Post.objects.g
+#    all_commenter_ids = Post.objects..order_by('-id').values_list('submitted_by', flat=True)[:25]
+#all_commenter_ids = list(all_commenter_ids)
+#    context_dict['images'] = image_list
     return render(request, 'tatu/index.html', context=context_dict)
 
 
@@ -35,8 +40,11 @@ def register(request):
 
             profile = profile_form.save(commit=False)
             profile.user = user
+            if 'avatar' in request.FILES:
+                profile.avatar = request.FILES['avatar']
             profile.save()
             registered = True
+
     else:
         user_form = UserForm()
         profile_form = ProfileForm()
@@ -121,16 +129,21 @@ def user_logout(request):
 @login_required
 def user_post(request):
     if request.method == 'POST':
-        post_form = PostForm(data=request.POST)
+        post_form = PostForm(data=request.POST, files=request.FILES)
 
         if post_form.is_valid():
-            post_form.save()
-        else:
-            print(post_form.errors)
+            post = post_form.save(commit=False)
+            post.author = request.user
+
+            if 'image' in request.FILES:
+                post.image = request.FILES['image']
+                post.save()
+            else:
+                print(post_form.errors)
     else:
         post_form = PostForm()
 
-    return render(request, 'tatu/upload.html', {'post_form': post_form,
+    return render(request, 'tatu/upload.html', {'post_form': post_form
                                                 })
 
 
