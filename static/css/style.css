@@ -5,12 +5,12 @@ body {
     background-color: white;
     background-image:
     linear-gradient(
-            to bottom,
-            #f2f2f4,
-            #f2f2f4 22.5%,
-            #e0e1e5 22.5%,
-            #e0e1e5 75%,
-            #f2f2f4 70%
+            to right,
+            #02060a,
+            #02060a 50%,
+            #dfe0e4 15%,
+            #dfe0e4 85%,
+            #dfe0e4 85%
     );
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -22,39 +22,23 @@ div {
     width: 100%;
     margin: 0 auto; /*this will cause the div to be in the center*/
 }
-div.botline{
+div.logo{
     position: absolute;
-    text-align: center;
 
-    top: 80%;
-    left:35%
-
-}
-div.midbox{
-    position: absolute;
-    display: inline-block;
-    text-align: center;
+    width: auto;
     top: 35%;
-    left: 10%;
-    right: 10%;
-}
-div.topbox{
+    left: 15%
 
-    width: 300px;
-    height: 100px;
-    box-sizing: content-box;
-    border: 2px solid black;
+
+
+}
+div.logotxt{
     position: absolute;
-    left: 10%;
-    top: 17%;
+    width: 40%;
+    height: auto%;
+    color: #02060a;
+    right: 5%;
+    top: 22%
 
-    
-    font-size: 35px;
-    text-align: center;
-
-    line-height: 300%;
-
-}
-div.title{
 
  }

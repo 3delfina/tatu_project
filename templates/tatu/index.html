@@ -16,42 +16,41 @@
 	</head>
 	
 	<body>
-	<center><div ><img src="{% static "images/logo.png" %} " alt="logo" width="15%"></div></center>
-
-
-    <div class="container">
-        <div class="topbox">TOP OF THE DAY</div></div>
-
-    <div class="midbox">
-
-            {% for image in images %}
-
-
-                    <img src="{{ MEDIA_URL }}{{ image }}"  class="img-thumbnail" width="25%" height="25%">
-
-                {% endfor %}
-		</div>
-
-
-
-    <center>  <div class="botline">
+	<center>  <div class="container">
 
 
 		<ul class="list-inline">
-			<li> <a href='/tatu/contact-us/'>Contact us</a></li>
-			<li> | </li>
-			<li> <a href='/tatu/FAQ/'>FAQ </a></li>
-			<li> | </li>
-			<li> <a href='/tatu/register/'>Register </a></li>
-			<li> | </li>
-			<li> <a href='/tatu/login/'>Login </a></li>
-			<li> | </li>
-			<li> <a href='/tatu/artists/'>Artists </a></li>
-			<li> | </li>
-			<li> <a href='/tatu/tattoos/'>Tattoos </a></li>
+            <li> <a href='/tatu/login/'>Login </a></li>
+            <li> <a href='/tatu/register/'>Register </a></li>
+            <li> <a href='/tatu/FAQ/'>FAQ </a></li>
+
+            <li> <a href='/tatu/artists/'>Artists </a></li>
+            <li> <a href='/tatu/tattoos/'>Tattoos </a></li>
+            <li> <a href='/tatu/contact-us/'>Contact us</a></li>
 
 		</ul>
 	</div></center>
+
+
+
+
+    <div class="logo">
+        <img src="{% static "images/logo.png" %} " alt="logo">
+    </div>
+
+
+
+    <div class="logotxt">
+
+
+        <blockquote style="color: #02060a">
+            <h1 style="colour: #02060a;;">Our website</h1>
+            <p class="logo">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel nisi ipsum. Cras accumsan iaculis diam, a blandit ex ultricies mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce interdum neque ligula, vitae dignissim quam posuere vitae. Pellentesque faucibus congue tellus in condimentum. Suspendisse molestie, tellus pulvinar posuere laoreet, dui est eleifend orci, ac aliquam neque sem sit amet neque. Donec vitae lectus maximus, consectetur nisi non, consectetur lorem. Aliquam erat volutpat. Sed eleifend at quam quis dapibus. Nam malesuada fermentum aliquet. Donec ac eros arcu. Praesent felis mi, lacinia sed purus at, ullamcorper facilisis metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam pellentesque metus non consectetur sodales. Sed iaculis a mauris id euismod..</p>
+            <footer>Cs nerd and gamer grill Sera </footer>
+        </blockquote>
+    </div>
+
+
 
 	</body>
 	

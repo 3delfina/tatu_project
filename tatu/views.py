@@ -13,7 +13,7 @@ from django.conf import settings
 
 def index(request):
     context_dict = {}
-    image_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media'))[1:4]
+    image_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media'))[0:3]
     context_dict['images'] = image_list
     return render(request, 'tatu/index.html', context=context_dict)
 
