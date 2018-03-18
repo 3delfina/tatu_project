@@ -79,9 +79,9 @@ def tattoos(request):
     return HttpResponse("""Tattoos page
     <a href="/tatu/">Index</a>""")
 
-#def about(request):
-#    return HttpResponse("""About page
-#    <a href="/tatu/">Index</a>""")
+def about(request):
+    return HttpResponse("""About page
+    <a href="/tatu/">Index</a>""")
 
 
     #user = UserProfile.objects.get(pk=1)
@@ -113,7 +113,6 @@ def faq(request):
     return render(request, 'tatu/faq.html', context=context_dict)
 
 
-<<<<<<< HEAD
 @login_required
 def user_logout(request):
     logout(request)
@@ -133,10 +132,8 @@ def user_post(request):
 
     return render(request, 'tatu/upload.html', {'post_form': post_form,
                                                 })
-=======
 
 
 def successView(request):
     context_dict = {}
     return render(request, "tatu/success.html", context=context_dict)
->>>>>>> efc870abffad2c1cddb1f15cd5ee8994c74a7fb6
