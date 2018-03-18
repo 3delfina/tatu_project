@@ -1,7 +1,0 @@
-Django==2.0.3
-django-appconf==1.0.2
-django-imagekit==4.0.2
-pilkit==2.0
-Pillow==5.0.0
-pytz==2018.3
-six==1.11.0
