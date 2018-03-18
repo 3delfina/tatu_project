@@ -5,15 +5,13 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.conf import settings
 
-class Page(models.Model):
-    #user = models.ForeignKey(User)
-    url = models.CharField(max_length=100)
 
-
-def user_directory_path(instance, filename):
+def user_avatar_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
-    
+    return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
+
+def user_image_path(instance, filename):
+    return 'user_{0}/posts/{1}'.format(instance.author.id, filename)
 
 class UserProfile(models.Model):
     # This maps each UserProfile to have a field that inherits from the User Model
@@ -21,11 +19,13 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # field for user avatar, defaults to /media/default/avatar.png
-    avatar = ProcessedImageField(upload_to=user_directory_path,
+    avatar = ProcessedImageField(upload_to=user_avatar_path,
                                  processors=[ResizeToFill(150, 150)],
                                  format='JPEG',
                                  options={'quality': 100},
-                                 default='default/avatar.png')
+                                 default='default/avatar.png',
+                                 blank=True)
+
     # Self Explanatory extraneous fields
     workplace = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)
@@ -37,25 +37,72 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-# TATTOO MODEL WIP, PLEASE DONT TOUCH!
+# The Post model: Every post must have an image, description, number of likes
+#                 and many posts may belong to only one Category and one User
+class Post(models.Model):
+    # The 'TD' etc are how the names will appear in the database
+    TRADITIONAL = 'TD'
+    REALISM = 'RL'
+    WATERCOLOR = 'WC'
+    TRIBAL = 'TR'
+    DOTWORK = 'DW'
+    GEOMETRIC = 'GM'
+    JAPANESE = 'JP'
+    LETTERING = 'LT'
+    BLACKWORK = 'BW'
+    
+    # This enum links the short versions to the human readable ones
+    CATEGORIES = (
+        (TRADITIONAL, 'Traditional'),
+        (REALISM, 'Realism'),
+        (WATERCOLOR, 'Watercolor'),
+        (TRIBAL, 'Tribal'),
+        (DOTWORK, 'Dotwork'),
+        (GEOMETRIC, 'Geometric'),
+        (JAPANESE, 'Japanese'),
+        (LETTERING, 'Lettering'),
+        (BLACKWORK, 'Blackwork'),
+    )
 
-#class Tattoo(models.Model):
-#    user = models.ForeignKey(User, related_name='images')
-#    image = models.ImageField()
-#    description = model.TextField()
-#    tag = models.CharField(max_length=30)
-#    rating = models.IntegerField()
-#    favourites = models.IntegerField()
+    category = models.CharField(max_length=2,
+                            choices=CATEGORIES,
+                            default=JAPANESE,
+                            )
 
-
-class Comment(models.Model):
-    #user = models.ForeignKey(User)
-    #picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
-    text = models.CharField(max_length=200)
-    date = models.DateField(auto_now_add=True)
+    # ManyToOne relationship: Many posts can be created by one User
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name='author',
+                               )
+    image = ProcessedImageField(upload_to=user_image_path,
+                                processors=[ResizeToFill(1000, 1000)],
+                                format='JPEG',
+                                options={'quality': 90},
+                                )
+    
+    description = models.CharField(max_length=280)
+    date = models.DateTimeField(auto_now_add=True)
+    favourites = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.text
+        return "#{0} - {1}".format(self.id, self.description[0:30])
 
-#class FavArtist(models.Model):
-    #user = models.ForeignKey(User)
+
+# The Comment model: Every comment must have an author, text, date, and
+#                    many comments may belong to only one Post and many
+#                    comments can be posted by one user
+class Comment(models.Model):
+    post = models.ForeignKey(Post,
+                             on_delete=models.CASCADE,
+                             related_name='post',
+                             )
+    poster = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name='poster',
+                               )
+
+    text = models.CharField(max_length=280)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)

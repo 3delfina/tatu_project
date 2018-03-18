@@ -1,0 +1,12 @@
+{% load staticfiles %}
+<div>
+
+        <form id="post_form" method="post" action="{% url 'upload' %}"
+              enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ post_form.as_p }}
+
+        <input type="submit" name="submit" value="Register" />
+        </form>
+</div>

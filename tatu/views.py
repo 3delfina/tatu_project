@@ -31,12 +31,8 @@ def register(request):
 
             profile = profile_form.save(commit=False)
             profile.user = user
-            if 'avatar' in request.FILES:
-                profile.avatar = request.FILES['avatar']
-                profile.save()
-                registered = True
-            else:
-                print(user_form.errors, profile_form.errors)
+            profile.save()
+            registered = True
     else:
         user_form = UserForm()
         profile_form = ProfileForm()
@@ -49,9 +45,27 @@ def register(request):
                    })
 
 
-def login(request):
-    return HttpResponse("""Login page
-    <a href="/tatu/">Index</a>""")
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account is disabled.")
+
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+        return render(request, 'tatu/login.html', {})
+
 
 def artists(request):
     return HttpResponse("""Artists page
@@ -84,3 +98,22 @@ def faq(request):
     return render(request, 'tatu/faq.html', context=context_dict)
 
 
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
+@login_required
+def user_post(request):
+    if request.method == 'POST':
+        post_form = PostForm(data=request.POST)
+
+        if post_form.is_valid():
+            post_form.save()
+        else:
+            print(post_form.errors)
+    else:
+        post_form = PostForm()
+
+    return render(request, 'tatu/upload.html', {'post_form': post_form,
+                                                })

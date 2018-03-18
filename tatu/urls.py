@@ -23,7 +23,9 @@ urlpatterns = [
     url(r'^contact-us/$', views.contact, name='contact'),
     url(r'^faq/$', views.faq, name='faq'),
     url(r'^register/$', views.register, name='register'),
-    url(r'^login/$', views.login, name='login'),
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^artists/$', views.artists, name='artists'),
     url(r'^tattoos/$', views.tattoos, name='tattoos'),
+    url(r'^upload/$', views.user_post, name='upload') 
 ]
