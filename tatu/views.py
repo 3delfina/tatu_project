@@ -70,11 +70,17 @@ def tattoos(request):
     #image_list = user.images.all()
 
 def contact(request):
-    return HttpResponse("""Contact us page
-    <a href="/tatu/">Index</a>""")
+    context_dict = {}
+    image_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media'))[1:4]
+    context_dict['images'] = image_list
+    return render(request, 'tatu/contact.html', context=context_dict)
+
+    
 
 def faq(request):
-    return HttpResponse("""FAQ page
-    <a href="/tatu/">Index</a>""")
+    context_dict = {}
+    image_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media'))[1:4]
+    context_dict['images'] = image_list
+    return render(request, 'tatu/faq.html', context=context_dict)
 
 
