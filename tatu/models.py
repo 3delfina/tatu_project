@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
-
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 class Page(models.Model):
     #user = models.ForeignKey(User)
@@ -19,12 +20,15 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # field for user avatar, defaults to /media/default/avatar.png
-    avatar = models.ImageField(upload_to=user_directory_path, 
+    avatar = ProcessedImageField(upload_to=user_directory_path,
+                               processors=[ResizeToFill(150, 150)],
+                               format='JPEG',
+                               options={'quality': 100},
                                default='default/avatar.png')
     # Self Explanatory extraneous fields
     workplace = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$') 
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
     # for whenever a method in a view etc calls str() on this object
