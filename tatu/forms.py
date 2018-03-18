@@ -38,3 +38,13 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('avatar', 'phone_number', 'website')
+<<<<<<< HEAD
+=======
+        exclude = ('user',)
+
+class ContactForm(forms.Form):
+    your_name = forms.CharField(required=True)
+    your_email = forms.EmailField(required=True)
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)
+>>>>>>> efc870abffad2c1cddb1f15cd5ee8994c74a7fb6

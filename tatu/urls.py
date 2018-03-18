@@ -27,5 +27,9 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^artists/$', views.artists, name='artists'),
     url(r'^tattoos/$', views.tattoos, name='tattoos'),
+<<<<<<< HEAD
     url(r'^upload/$', views.user_post, name='upload') 
+=======
+    url(r'^success/$', views.successView, name='success'),
+>>>>>>> efc870abffad2c1cddb1f15cd5ee8994c74a7fb6
 ]

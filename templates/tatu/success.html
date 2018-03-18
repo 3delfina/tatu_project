@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-{% load staticfiles %} <!-- New line -->
+{% load staticfiles %}
+<html>
+
 <html>
 	<head>
 		<title>Tatu</title>
@@ -16,30 +18,19 @@
 	</head>
 	
 	<body>
-	<center><div ><img src="{% static "images/logo.png" %} " alt="logo" width="15%"></div></center>
-
-	<div class="midbox">
-		
-			<h3>WAD2 Team A </h3><br />
-			Level 7, Boyd Orr Building, University of Glasgow<br />
-			175 University Avenue, Glasgow G12 8PW<br />
-			<br />
-			
-			<form method="post">
-			{% csrf_token %}
-			{{ form.as_p }}
-			<div class="form-actions">
-			<button type="submit">Send</button>
-	</div>
-</form>
-		
-    
-	</div>
 
 
 
 
-	<center>  <div class="botline">
+    <div class="logo">
+        <img src="{% static "images/logo.png" %} " alt="logo">
+    </div>
+
+
+
+	<h3>Thank you for you email!</h3>
+
+<center>  <div class="botline">
 		<ul class="list-inline">
 			<li> <a href='/tatu/'>Home</a></li>
 			<li> | </li>
