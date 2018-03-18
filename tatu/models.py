@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from django.conf import settings
 
 class Page(models.Model):
     #user = models.ForeignKey(User)
