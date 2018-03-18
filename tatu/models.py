@@ -21,10 +21,10 @@ class UserProfile(models.Model):
 
     # field for user avatar, defaults to /media/default/avatar.png
     avatar = ProcessedImageField(upload_to=user_directory_path,
-                               processors=[ResizeToFill(150, 150)],
-                               format='JPEG',
-                               options={'quality': 100},
-                               default='default/avatar.png')
+                                 processors=[ResizeToFill(150, 150)],
+                                 format='JPEG',
+                                 options={'quality': 100},
+                                 default='default/avatar.png')
     # Self Explanatory extraneous fields
     workplace = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)
