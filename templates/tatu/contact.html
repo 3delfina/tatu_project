@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load staticfiles %} <!-- New line -->
+<html>
+	<head>
+		<title>Tatu</title>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="{% static "css/style.css" %} ">
+
+	</head>
+	
+	<body>
+	<center><div ><img src="{% static "images/logo.png" %} " alt="logo" width="15%"></div></center>
+
+	<div class="midbox">
+		
+			<h3>WAD2 Team A </h3><br />
+			Level 7, Boyd Orr Building, University of Glasgow<br />
+			175 University Avenue, Glasgow G12 8PW<br />
+			Email: 2232817m@student.gla.ac.uk <br />
+			<br />
+		
+    
+	</div>
+
+
+
+
+	<center>  <div class="botline">
+		<ul class="list-inline">
+			<li> <a href='/tatu/'>Home</a></li>
+			<li> | </li>
+			<li> <a href='/tatu/contact-us/'>Contact us</a></li>
+			<li> | </li>
+			<li> <a href='/tatu/FAQ/'>FAQ </a></li>
+			<li> | </li>
+			<li> <a href='/tatu/register/'>Register </a></li>
+			<li> | </li>
+			<li> <a href='/tatu/login/'>Login </a></li>
+			<li> | </li>
+			<li> <a href='/tatu/artists/'>Artists </a></li>
+			<li> | </li>
+			<li> <a href='/tatu/tattoos/'>Tattoos </a></li>
+
+		</ul>
+	</div></center>
+
+	</body>
+	
+</html>
