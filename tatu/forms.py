@@ -27,4 +27,8 @@ class ProfileForm(forms.ModelForm):
         fields = ('avatar', 'phone_number', 'website')
         exclude = ('user',)
 
-
+class ContactForm(forms.Form):
+    your_name = forms.CharField(required=True)
+    your_email = forms.EmailField(required=True)
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)

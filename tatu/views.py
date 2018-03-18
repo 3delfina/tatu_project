@@ -9,6 +9,10 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.conf import settings
 
+from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import redirect
+from .forms import ContactForm
+
 # Create your views here.
 
 def index(request):
@@ -70,10 +74,21 @@ def tattoos(request):
     #image_list = user.images.all()
 
 def contact(request):
-    context_dict = {}
-    image_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media'))[1:4]
-    context_dict['images'] = image_list
-    return render(request, 'tatu/contact.html', context=context_dict)
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['admin@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('success')
+    return render(request, "tatu/contact.html", {'form': form})
+  
 
     
 
@@ -84,3 +99,8 @@ def faq(request):
     return render(request, 'tatu/faq.html', context=context_dict)
 
 
+
+
+def successView(request):
+    context_dict = {}
+    return render(request, "tatu/success.html", context=context_dict)

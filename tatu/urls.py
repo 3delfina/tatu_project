@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^artists/$', views.artists, name='artists'),
     url(r'^tattoos/$', views.tattoos, name='tattoos'),
+    url(r'^success/$', views.successView, name='success'),
 ]
