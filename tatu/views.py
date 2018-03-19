@@ -82,7 +82,7 @@ def user_login(request):
 def artists(request):
     return HttpResponse("""Artists page""")
 
-
+@login_required
 def profile(request):
     return HttpResponse("""Profile page""")
 
