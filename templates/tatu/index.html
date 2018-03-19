@@ -8,50 +8,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		
-		<link rel="stylesheet" type="text/css" href="{% static "css/style.css" %} ">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
 
 	</head>
 	
 	<body>
-	<center>  <div class="container">
+	    <div class="navi">
+            {% if user.is_authenticated %}
+            <a href='/tatu/profile/'>profile | </a>
+            <a href="{% url 'logout' %}">logout | </a>
+            {% else %}
+            <a href='/tatu/login/'>Login | </a>
+            <a href='/tatu/register/'>Register | </a>
+            {% endif %}
+            <a href='/tatu/artists/'>Artists | </a>
+            <a href='/tatu/tattoos/'>Tattoos | </a>
+            <a href='/tatu/contact-us/'>Contact us</a>
 
-
-		<ul class="list-inline">
-            <li> <a href='/tatu/login/'>Login </a></li>
-            <li> <a href='/tatu/register/'>Register </a></li>
-            <li> <a href='/tatu/faq/'>FAQ </a></li>
-
-            <li> <a href='/tatu/artists/'>Artists </a></li>
-            <li> <a href='/tatu/tattoos/'>Tattoos </a></li>
-            <li> <a href='/tatu/contact-us/'>Contact us</a></li>
-
-		</ul>
-	</div></center>
-
-
-
-
-    <div class="logo">
-        <img src="{% static "images/logo.png" %} " alt="logo">
-    </div>
-
-
-
-    <div class="logotxt">
-
-
-        <blockquote style="color: #02060a">
-            <h1 style="colour: #02060a;;">Our website</h1>
-            <p class="logo">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel nisi ipsum. Cras accumsan iaculis diam, a blandit ex ultricies mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce interdum neque ligula, vitae dignissim quam posuere vitae. Pellentesque faucibus congue tellus in condimentum. Suspendisse molestie, tellus pulvinar posuere laoreet, dui est eleifend orci, ac aliquam neque sem sit amet neque. Donec vitae lectus maximus, consectetur nisi non, consectetur lorem. Aliquam erat volutpat. Sed eleifend at quam quis dapibus. Nam malesuada fermentum aliquet. Donec ac eros arcu. Praesent felis mi, lacinia sed purus at, ullamcorper facilisis metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam pellentesque metus non consectetur sodales. Sed iaculis a mauris id euismod..</p>
-            <footer>Cs nerd and gamer grill Sera </footer>
-        </blockquote>
-    </div>
-
-
-
+        </div>
 	</body>
 	
 </html>
