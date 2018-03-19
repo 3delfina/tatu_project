@@ -80,16 +80,17 @@ def user_login(request):
 
 
 def artists(request):
-    return HttpResponse("""Artists page
-    <a href="/tatu/">Index</a>""")
+    return HttpResponse("""Artists page""")
+
+
+def profile(request):
+    return HttpResponse("""Profile page""")
 
 def tattoos(request):
-    return HttpResponse("""Tattoos page
-    <a href="/tatu/">Index</a>""")
+    return HttpResponse("""Tattoos page""")
 
 def about(request):
-    return HttpResponse("""About page
-    <a href="/tatu/">Index</a>""")
+    return HttpResponse("""About page""")
 
 
     #user = UserProfile.objects.get(pk=1)
