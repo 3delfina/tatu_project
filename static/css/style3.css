@@ -1,0 +1,28 @@
+html,body {
+    background-image:  url("register.png");
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+
+    margin: 0;
+    padding: 0;
+
+
+}
+.navi{
+    background-color: red;
+    font-family: Arial;
+    font-size: 13px;
+    font-size: 1vw;
+    text-align: left;
+    text-transform: uppercase;
+    color: #c13399;
+}
+.reg{
+    background-color: blue;
+}
+.noreg{
+    background-color: blue;
+}

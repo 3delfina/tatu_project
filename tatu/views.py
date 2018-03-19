@@ -80,17 +80,17 @@ def user_login(request):
 
 
 def artists(request):
-    return HttpResponse("""Artists page""")
+    return render(request,'tatu/artists.html',{})
 
 @login_required
 def profile(request):
-    return HttpResponse("""Profile page""")
+    return render(request,'tatu/profile.html',{})
 
 def tattoos(request):
-    return HttpResponse("""Tattoos page""")
+    return render(request,'tatu/tattoos.html',{})
 
 def about(request):
-    return HttpResponse("""About page""")
+    return render(request,'tatu/about.html',{})
 
 
     #user = UserProfile.objects.get(pk=1)

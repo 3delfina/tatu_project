@@ -1,0 +1,13 @@
+html,body {
+    background-image:  url("other.png");
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+
+}
