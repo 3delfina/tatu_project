@@ -94,9 +94,9 @@ class Post(models.Model):
 #                    many comments may belong to only one Post and many
 #                    comments can be posted by one user
 class Comment(models.Model):
-    post = models.ForeignKey(Post,
+    thread = models.ForeignKey(Post,
                              on_delete=models.CASCADE,
-                             related_name='post',
+                             related_name='thread',
                              )
     poster = models.ForeignKey(User,
                                on_delete=models.CASCADE,
