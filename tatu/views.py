@@ -141,7 +141,7 @@ def user_post(request):
 
 @login_required
 def submit_comment(request):
-    post = Post.objects.get(pk=3)
+    post = Post.objects.get(pk=1)
     comments = post.comments.all()
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
