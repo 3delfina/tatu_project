@@ -4,7 +4,9 @@
     <img src="{{ post.image.url }}" class="img-thumbnail">
     {{ post.description }}
     {% for c in comments %}
-        {{ c.id }} {{ c.text }} {{ c.poster }} {{ c.date }}
+    <img src="{ c.poster.userprofile.avatar.url }" class="img-thumbnail"> {{ c.id }} {{ c.text }} {{ c.poster }} {{ c.date }}
+
+    </br>
     {% endfor %}
     <form id="comment_form" method="post" action="{% url 'test' %}" enctype="multipart/form-data">
         {% csrf_token %}

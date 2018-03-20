@@ -98,7 +98,7 @@ class Comment(models.Model):
                              on_delete=models.CASCADE,
                              related_name='comments',
                              )
-    poster = models.ForeignKey(User,
+    poster = models.ForeignKey(UserProfile,
                                on_delete=models.CASCADE,
                                related_name='posters',
                                )
