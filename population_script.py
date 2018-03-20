@@ -7,7 +7,7 @@ django.setup()
 from tatu.models import UserProfile, Post, Comment
 from django.contrib.auth.models import User
 
-# UserProfile (avatar, workplace, website, phone_number)          [DONE]
+# UserProfile (avatar, workplace, website, phone_number)
 # Post (category, author, image, description, date, favourites)
 # Comment (text, date)
 
@@ -22,6 +22,8 @@ def user_avatar_path(instance, filename):
 """
 
 def populate():
+
+# what's the best way to map users to user_profiles?
 
     users = [
         {"username": "jezza32",
@@ -38,90 +40,116 @@ def populate():
          "first_name": "Stephen",
          "last_name": "O'Connelly",
          "password": "pizzaisthebest",
-         "email": "pizzaboy82@gmail.com"},
-        ]
-
-# mapping users to user_profiles just by index within their lists
-# probably not the best way, but it should work?? is there a better way?
-
-    user_profiles = [
-        {"avatar": "Users/rossclark/workspace/pop/a",
-         "workplace": "Tattoo Heaven",
-         "website": "www.tattooheaven.com",
-         "phone_number": 07783745929},
-        {"avatar": "Users/rossclark/workspace/pop/b",
-         "workplace": "Lucky Cat Tattoo",
-         # website missing - i think it can be blank? let's test that
-         "phone_number": 07792825577},
-        {"avatar": "Users/rossclark/workspace/pop/c",
-         "workplace": "Otzi Tattoos",
-         "website": "www.tattooheaven.com",
-         "phone_number": 07783745929}
-        ]
-
-# posts are also associated with users
-    posts = [
-        {"category": "RL",
-         "image": "Users/rossclark/workspace/pop/a",
-         "description": "Perhaps the best tattoo I've ever completed! Ultra realistic.",
-         "date": datetime.datetime(2018,03,16),
-         "favourites": 5},
-        {"category": "GM",
-         "image": "Users/rossclark/workspace/pop/b",
-         "description": "aaa",
-         "date": datetime.datetime(2018, 03, 12),
-         "favourites": 13},
-        {"category": "BW",
-         "image": "Users/rossclark/workspace/pop/c",
-         "description": "aaa",
-         "date": datetime.datetime(2018, 03, 15),
-         "favourites": 2}
+         "email": "pizzaboy82@gmail.com"}
     ]
 
-# comments are also associated with individual posts & individual users
-    comments = [
-        {"text": "this tattoo sucks. die",
-         "date": datetime.datetime(2018,03,20)},
-        {"text": "This work is amazing! You should be proud!",
-         "date": datetime.datetime(2018,03,19)},
-        {"text": "uhm. it's interesting",
-         "date": datetime.datetime(2018,03,17)}
-    ]
+    user_profiles = {
+        "jezza32": {
+            "avatar": "Users/rossclark/workspace/pop/a",
+            "workplace": "Tattoo Heaven",
+            "website": "www.tattooheaven.com",
+            "phone_number": 07783745929
+        },
+        "xo_g1ve_m3_h0p3_xo": {
+            "avatar": "Users/rossclark/workspace/pop/b",
+            "workplace": "Lucky Cat Tattoo",
+            "website": "www.google.com",
+            "phone_number": 07792825577
+        },
+        "pizzaboy82": {
+            "avatar": "Users/rossclark/workspace/pop/c",
+            "workplace": "Otzi Tattoos",
+            "website": "www.otzitattoos.com",
+            "phone_number": 07783745929
+        }
+    }
 
-    for ix, entry in enumerate(users):
-        add_user(entry)
-        add_user_profile(user_profiles[ix])
-        # do we need to pass the User instance on in order to create the UserProfile instance?
-        # in that case, you'd want to set add_user(entry) = user, then pass user into
-        # add_user_profile, and within that, pass user=user into the get_or_create function
+# each set of posts is attributed to a specific user.
+# each user has an associated list of posts they've created.
+    posts = {
+        "jezza32": [
+            {"category": "RL",
+             "image": "Users/rossclark/workspace/pop/a",
+             "description": "Perhaps the best tattoo I've ever completed! Ultra realistic.",
+             "date": datetime.datetime(2018,03,16),
+             "favourites": 5}
+        ],
+        "xo_g1ve_m3_h0p3_xo": [
+            {"category": "GM",
+             "image": "Users/rossclark/workspace/pop/b",
+             "description": "aaa",
+             "date": datetime.datetime(2018, 03, 12),
+             "favourites": 13}
+        ],
+        "pizzaboy82": [
+            {"category": "BW",
+             "image": "Users/rossclark/workspace/pop/c",
+             "description": "aaa",
+             "date": datetime.datetime(2018, 03, 15),
+             "favourites": 2}
+        ]
+    }
+
+# comments are associated with individual posts as well as individual users (posters)
+# need to alter below code so as to allow for that
+    comments = {
+        "jezza32": [
+            {"text": "this tattoo sucks. die",
+             "date": datetime.datetime(2018,03,20)}
+        ],
+        "xo_g1ve_m3_h0p3_xo": [
+            {"text": "This work is amazing! You should be proud!",
+             "date": datetime.datetime(2018,03,19)},
+        ],
+        "pizzaboy82": [
+            {"text": "uhm. it's interesting",
+             "date": datetime.datetime(2018,03,17)}
+        ]
+    }
+
+    for ix, user_info in enumerate(users):
+        user = add_user(user_info)
+        username = user.get_username()
+        profile = add_user_profile(user, user_profiles[username])
+        for post_info in posts[username]:
+            add_post(user, post_info)
+        """
+        ## this little block of code won't do what we're after - need a separate for loop? ##
+        for comment_info in comments[username]:
+            add_comment(comment_info)
+        """
+    for comment_info in comments[]:
 
 def add_user(entry):
-    username = entry["username"]
-    first = entry["first_name"]
-    last = entry["last_name"]
-    password = entry["password"]
-    email = entry["email"]
-
-    user = User.objects.create_user(username=username, first_name=first, last_name=last, password=password, email=email)
+    user = User.objects.create_user(username=entry["username"],
+                                    first_name=entry["first_name"],
+                                    last_name=entry["last_name"],
+                                    password=entry["password"],
+                                    email=entry["password"])
     user.save()
     return user
 
-def add_user_profile(dict):
-    avatar = dict["avatar"]
-    workplace = dict["workplace"]
-    website = dict["website"]
-    phone = dict["phone_number"]
-
-    profile = UserProfile.objects.get_or_create(avatar=avatar, workplace=workplace, website=website, phone=phone)[0]
+def add_user_profile(user, dict):
+    profile = UserProfile.objects.get_or_create(user=user,
+                                                avatar=dict["avatar"],
+                                                workplace=dict["workplace"],
+                                                website=dict["website"],
+                                                phone_number=dict["phone_number"])[0]
     profile.save()
     return profile
 
+def add_post(user, dict):
+    post = Post.objects.get_or_create(user=user,
+                                      category=dict["category"],
+                                      image=dict["image"],
+                                      description=dict["description"],
+                                      date=dict["date"],
+                                      favourites=dict["favourites"])[0]
+    post.save()
+    return post
+
+# needs altered along with rest of comment-related code
 def add_comment(text, date):
     comment = Comment.objects.get_or_create(text=text, date=date)[0]
     comment.save()
     return comment
-
-def add_post():
-    post = Post.objects.get_or_create()[0]
-    post.save()
-    return post
