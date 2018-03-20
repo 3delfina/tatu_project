@@ -96,11 +96,11 @@ class Post(models.Model):
 class Comment(models.Model):
     thread = models.ForeignKey(Post,
                              on_delete=models.CASCADE,
-                             related_name='thread',
+                             related_name='comments',
                              )
     poster = models.ForeignKey(User,
                                on_delete=models.CASCADE,
-                               related_name='poster',
+                               related_name='posters',
                                )
 
     text = models.CharField(max_length=280)
