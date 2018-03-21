@@ -17,13 +17,6 @@ from .forms import ContactForm
 
 def index(request):
     context_dict = {}
-    test = Post.objects.all().order_by('-likes').values_list('image', flat=True)
-    test = list(test)
-    print(test)
-#    image_list = Post.objects.g
-#    all_commenter_ids = Post.objects..order_by('-id').values_list('submitted_by', flat=True)[:25]
-#all_commenter_ids = list(all_commenter_ids)
-#    context_dict['images'] = image_list
     return render(request, 'tatu/index.html', context=context_dict)
 
 
@@ -93,8 +86,6 @@ def about(request):
     return render(request,'tatu/about.html',{})
 
 
-    #user = UserProfile.objects.get(pk=1)
-    #image_list = user.images.all()
 
 def contact(request):
     if request.method == 'GET':
@@ -147,6 +138,28 @@ def user_post(request):
     return render(request, 'tatu/upload.html', {'post_form': post_form
                                                 })
 
+
+@login_required
+def submit_comment(request):
+    post = Post.objects.get(pk=1)
+    comments = post.comments.all()
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = post
+            comment.poster = request.user
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'tatu/test.html', {'comment_form': comment_form,
+                                              'post': post,
+                                              'comments': comments
+                                              })
 
 def successView(request):
     context_dict = {}

@@ -5,6 +5,11 @@ from imagekit.forms import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text',)
+
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post

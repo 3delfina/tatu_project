@@ -83,7 +83,7 @@ class Post(models.Model):
                                 )
     
     description = models.CharField(max_length=280)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     likes = models.IntegerField(default=0)
 
     def __str__(self):
@@ -94,17 +94,17 @@ class Post(models.Model):
 #                    many comments may belong to only one Post and many
 #                    comments can be posted by one user
 class Comment(models.Model):
-    post = models.ForeignKey(Post,
+    thread = models.ForeignKey(Post,
                              on_delete=models.CASCADE,
-                             related_name='post',
+                             related_name='comments',
                              )
-    poster = models.ForeignKey(User,
+    poster = models.ForeignKey(UserProfile,
                                on_delete=models.CASCADE,
-                               related_name='poster',
+                               related_name='posters',
                                )
 
     text = models.CharField(max_length=280)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id)
+        return "#{0} - {1}".format(self.id, self.text[0:30])
