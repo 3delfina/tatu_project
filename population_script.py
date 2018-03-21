@@ -6,6 +6,7 @@ import django
 django.setup()
 from tatu.models import UserProfile, Post, Comment
 from django.contrib.auth.models import User
+import datetime
 
 # UserProfile (avatar, workplace, website, phone_number)
 # Post (category, author, image, description, date, favourites)
@@ -14,12 +15,10 @@ from django.contrib.auth.models import User
 # instance: if the user's id is 13, their avatar will be saved to:
 # .../tatu_project/media/user_13/avatar/(filename)
 
-"""
-def user_avatar_path(instance, filename):
+def pop_avatar_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     # change this to the path pages are saved at
     return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
-"""
 
 def populate():
 
@@ -48,62 +47,67 @@ def populate():
             "avatar": "Users/rossclark/workspace/pop/a",
             "workplace": "Tattoo Heaven",
             "website": "www.tattooheaven.com",
-            "phone_number": 07783745929
+            "phone_number": "07783745929"
         },
         "xo_g1ve_m3_h0p3_xo": {
             "avatar": "Users/rossclark/workspace/pop/b",
             "workplace": "Lucky Cat Tattoo",
             "website": "www.google.com",
-            "phone_number": 07792825577
+            "phone_number": "07792825577"
         },
         "pizzaboy82": {
             "avatar": "Users/rossclark/workspace/pop/c",
             "workplace": "Otzi Tattoos",
             "website": "www.otzitattoos.com",
-            "phone_number": 07783745929
+            "phone_number": "07783745929"
         }
     }
 
 # each set of posts is attributed to a specific user.
 # each user has an associated list of posts they've created.
+# ISSUE: need to work out how to allow for dates in the past - get round auto_now_add
     posts = {
         "jezza32": [
             {"category": "RL",
              "image": "Users/rossclark/workspace/pop/a",
              "description": "Perhaps the best tattoo I've ever completed! Ultra realistic.",
-             "date": datetime.datetime(2018,03,16),
-             "favourites": 5}
+             "date": datetime.date(2018,3,16),
+             "likes": 5}
         ],
         "xo_g1ve_m3_h0p3_xo": [
             {"category": "GM",
              "image": "Users/rossclark/workspace/pop/b",
              "description": "aaa",
-             "date": datetime.datetime(2018, 03, 12),
-             "favourites": 13}
+             "date": datetime.date(2018,3,12),
+             "likes": 13}
         ],
         "pizzaboy82": [
             {"category": "BW",
              "image": "Users/rossclark/workspace/pop/c",
              "description": "aaa",
-             "date": datetime.datetime(2018, 03, 15),
-             "favourites": 2}
+             "date": datetime.date(2018,3,15),
+             "likes": 2}
         ]
     }
 
 # comments are associated with individual posts as well as individual users (posters)
 # need to alter below code so as to allow for that
+# ISSUE: need to work out how to allow for dates in the past - get round auto_now_add
     comments = {
         "jezza32": [
             {"text": "this tattoo sucks. die",
-             "date": datetime.datetime(2018,03,20)}
+             "date": datetime.date(2018,3,20),
+             "post_id": 3}
         ],
         "xo_g1ve_m3_h0p3_xo": [
             {"text": "This work is amazing! You should be proud!",
-             "date": datetime.datetime(2018,03,19)},
+             "date": datetime.date(2018,3,19),
+             "post_id": 1}
         ],
         "pizzaboy82": [
             {"text": "uhm. it's interesting",
-             "date": datetime.datetime(2018,03,17)}
+             "date": datetime.date(2018,3,17),
+             "post_id": 2}
         ]
     }
 
@@ -113,12 +117,14 @@ def populate():
         profile = add_user_profile(user, user_profiles[username])
         for post_info in posts[username]:
             add_post(user, post_info)
-        """
-        ## this little block of code won't do what we're after - need a separate for loop? ##
-        for comment_info in comments[username]:
-            add_comment(comment_info)
-        """
-    for comment_info in comments[]:
+
+    for username, comment_info in comments.items():
+        for comment in comment_info:
+            add_comment(username, comment)
+
+
+# we use the username attribute to identify unique users
+# we use the post id (?) to identify unique posts
 
 def add_user(entry):
     user = User.objects.create_user(username=entry["username"],
@@ -139,17 +145,28 @@ def add_user_profile(user, dict):
     return profile
 
 def add_post(user, dict):
-    post = Post.objects.get_or_create(user=user,
+    post = Post.objects.get_or_create(author=user,
                                       category=dict["category"],
                                       image=dict["image"],
                                       description=dict["description"],
                                       date=dict["date"],
-                                      favourites=dict["favourites"])[0]
+                                      likes=dict["likes"])[0]
     post.save()
     return post
 
-# needs altered along with rest of comment-related code
-def add_comment(text, date):
-    comment = Comment.objects.get_or_create(text=text, date=date)[0]
+def add_comment(username, info):
+    user = User.objects.get(username=username)
+    user_profile = UserProfile.objects.get(user=user)
+    post = Post.objects.get(id=info["post_id"])
+
+    # ISSUE: why is this necessary? get_or_create returns tuple, but isn't problematic elsewhere
+    comment, aaa = Comment.objects.get_or_create(thread=post,
+                                            poster=user_profile,
+                                            text=info["text"])
     comment.save()
     return comment
+    # ISSUE: need to add date to constructor
+
+if __name__ == '__main__':
+    print("Starting Tatu population script...")
+    populate()

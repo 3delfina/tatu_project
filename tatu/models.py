@@ -83,7 +83,7 @@ class Post(models.Model):
                                 )
     
     description = models.CharField(max_length=280)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     likes = models.IntegerField(default=0)
 
     def __str__(self):
@@ -107,4 +107,4 @@ class Comment(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id)
+        return "#{0} - {1}".format(self.id, self.text[0:30])
