@@ -30,4 +30,6 @@ urlpatterns = [
     url(r'^tattoos/$', views.tattoos, name='tattoos'),
     url(r'^upload/$', views.user_post, name='upload'),
     url(r'^success/$', views.successView, name='success'),
+    url(r'^test/$', views.submit_comment, name='test'),
+
 ]
