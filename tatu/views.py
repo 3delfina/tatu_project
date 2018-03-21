@@ -17,7 +17,7 @@ from .forms import ContactForm
 
 def index(request):
     context_dict = {}
-    test = Post.objects.all().order_by('-favourites').values_list('image', flat=True)
+    test = Post.objects.all().order_by('-likes').values_list('image', flat=True)
     test = list(test)
     print(test)
 #    image_list = Post.objects.g
