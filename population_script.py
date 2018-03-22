@@ -7,22 +7,11 @@ django.setup()
 from tatu.models import UserProfile, Post, Comment
 from django.contrib.auth.models import User
 import datetime
+from imagekit.models import ProcessedImageField
 
-# UserProfile (avatar, workplace, website, phone_number)
-# Post (category, author, image, description, date, favourites)
-# Comment (text, date)
-
-# instance: if the user's id is 13, their avatar will be saved to:
-# .../tatu_project/media/user_13/avatar/(filename)
-
-def pop_avatar_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    # change this to the path pages are saved at
-    return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
+## NOTE: RUN THE POPULATION SCRIPT FIRST, BEFORE YOU CREATE A NEW SUPERUSER ACCOUNT!
 
 def populate():
-
-# what's the best way to map users to user_profiles?
 
     users = [
         {"username": "jezza32",
@@ -44,19 +33,16 @@ def populate():
 
     user_profiles = {
         "jezza32": {
-            "avatar": "Users/rossclark/workspace/pop/a",
             "workplace": "Tattoo Heaven",
             "website": "www.tattooheaven.com",
             "phone_number": "07783745929"
         },
         "xo_g1ve_m3_h0p3_xo": {
-            "avatar": "Users/rossclark/workspace/pop/b",
             "workplace": "Lucky Cat Tattoo",
             "website": "www.google.com",
             "phone_number": "07792825577"
         },
         "pizzaboy82": {
-            "avatar": "Users/rossclark/workspace/pop/c",
             "workplace": "Otzi Tattoos",
             "website": "www.otzitattoos.com",
             "phone_number": "07783745929"
@@ -69,6 +55,7 @@ def populate():
     posts = {
         "jezza32": [
             {"category": "RL",
+             #"image": os.path.join(TATTOO_FOLDER, post.id),
              "image": "Users/rossclark/workspace/pop/a",
              "description": "Perhaps the best tattoo I've ever completed! Ultra realistic.",
              "date": datetime.date(2018,3,16),
@@ -91,7 +78,6 @@ def populate():
     }
 
 # comments are associated with individual posts as well as individual users (posters)
-# need to alter below code so as to allow for that
 # ISSUE: need to work out how to allow for dates in the past - get round auto_now_add
     comments = {
         "jezza32": [
@@ -122,10 +108,6 @@ def populate():
         for comment in comment_info:
             add_comment(username, comment)
 
-
-# we use the username attribute to identify unique users
-# we use the post id (?) to identify unique posts
-
 def add_user(entry):
     user = User.objects.create_user(username=entry["username"],
                                     first_name=entry["first_name"],
@@ -136,8 +118,10 @@ def add_user(entry):
     return user
 
 def add_user_profile(user, dict):
+    id = str(user.id)
+    avatar = os.path.join('user_'+id, 'avatar', "1.jpg")
     profile = UserProfile.objects.get_or_create(user=user,
-                                                avatar=dict["avatar"],
+                                                avatar=avatar,
                                                 workplace=dict["workplace"],
                                                 website=dict["website"],
                                                 phone_number=dict["phone_number"])[0]
@@ -145,6 +129,8 @@ def add_user_profile(user, dict):
     return profile
 
 def add_post(user, dict):
+    id = str(user.id)
+    image = os.path.join('user_'+id, 'posts', 'tat.jpg')
     post = Post.objects.get_or_create(author=user,
                                       category=dict["category"],
                                       image=dict["image"],
@@ -165,7 +151,7 @@ def add_comment(username, info):
                                             text=info["text"])
     comment.save()
     return comment
-    # ISSUE: need to add date to constructor
+    # ISSUE: need to add date to Comment constructor
 
 if __name__ == '__main__':
     print("Starting Tatu population script...")
