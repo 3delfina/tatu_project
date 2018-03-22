@@ -19,6 +19,9 @@ def user_image_path(instance, filename):
 
 def user_image_path(instance, filename):
     return '{0}/posts/{1}'.format(instance.author.username, filename)
+<<<<<<< HEAD
+>>>>>>> parent of f84831e... removed previous changes
+=======
 >>>>>>> parent of f84831e... removed previous changes
 
 class UserProfile(models.Model):
