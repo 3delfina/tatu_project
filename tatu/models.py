@@ -87,7 +87,7 @@ class Post(models.Model):
     likes = models.IntegerField(default=0)
 
     def __str__(self):
-        return "(#{0}) {1}: {2}".format(self.id, self.author.username, self.description[0:80])
+        return "(#{0}) {1}: {2}".format(self.id, self.author.username, self.description[0:120])
 
 
 # The Comment model: Every comment must have an author, text, date, and
