@@ -73,25 +73,20 @@ def populate():
         ]
     }
 
-# comments are associated with individual posts as well as individual users (posters)
-# ISSUE: need to work out how to allow for dates in the past - get round auto_now_add
-    comments = {
-        "jezza32": [
-            {"text": "this tattoo sucks. die",
-             "date": datetime.date(2018,3,20),
-             "post_id": 3}
-        ],
-        "xo_g1ve_m3_h0p3_xo": [
-            {"text": "This work is amazing! You should be proud!",
-             "date": datetime.date(2018,3,19),
-             "post_id": 1}
-        ],
-        "pizzaboy82": [
-            {"text": "uhm. it's interesting",
-             "date": datetime.date(2018,3,17),
-             "post_id": 2}
-        ]
-    }
+    comments = [
+        {"text": "this tattoo sucks. die",
+         "date": datetime.date(2018,3,20),
+         "poster": "jezza32",
+         "post_id": 3},
+        {"text": "This work is amazing! You should be proud!",
+         "date": datetime.date(2018,3,19),
+         "poster": "xo_g1ve_m3_h0p3_xo",
+         "post_id": 1},
+        {"text": "uhm. it's interesting",
+         "date": datetime.date(2018,3,17),
+         "poster": "pizzaboy82",
+         "post_id": 2}
+    ]
 
     for ix, user_info in enumerate(users):
         user = add_user(user_info)
@@ -100,9 +95,8 @@ def populate():
         for post_info in posts[username]:
             add_post(user, post_info)
 
-    for username, comment_info in comments.items():
-        for comment in comment_info:
-            add_comment(username, comment)
+    for comment in comments:
+        add_comment(comment)
 
 def add_user(entry):
     user = User.objects.create_user(username=entry["username"],
@@ -136,18 +130,18 @@ def add_post(user, dict):
     post.save()
     return post
 
-def add_comment(username, info):
-    user = User.objects.get(username=username)
+def add_comment(info):
+    user = User.objects.get(username=info["poster"])
     user_profile = UserProfile.objects.get(user=user)
     post = Post.objects.get(id=info["post_id"])
 
-    # ISSUE: why is this necessary? get_or_create returns tuple, but isn't problematic elsewhere
+    # ISSUE: why is the tuple necessary? get_or_create returns tuple, but isn't problematic elsewhere
+    # ISSUE: must add date to get_or_create function - override auto_add_now in DateTimeField
     comment, aaa = Comment.objects.get_or_create(thread=post,
-                                            poster=user_profile,
-                                            text=info["text"])
+                                                 poster=user_profile,
+                                                 text=info["text"])
     comment.save()
     return comment
-    # ISSUE: need to add date to Comment constructor
 
 if __name__ == '__main__':
     print("Starting Tatu population script...")
