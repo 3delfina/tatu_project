@@ -9,13 +9,9 @@ from django.conf import settings
 def user_avatar_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
 
-    return os.path.join(instance.user.username, 'avatar', filename)
+    return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
 
-def user_image_path(instance, filename):
-    return os.path.join(instance.author.username, 'posts', filename)
 
-    # return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
-    return '{0}/avatar/{1}'.format(instance.user.username, filename)
 
 def user_image_path(instance, filename):
     return '{0}/posts/{1}'.format(instance.author.username, filename)
