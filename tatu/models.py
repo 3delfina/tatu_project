@@ -8,13 +8,10 @@ from django.conf import settings
 
 def user_avatar_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-
-    return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
-
-
+    return os.path.join(instance.user.username, 'avatar', filename)
 
 def user_image_path(instance, filename):
-    return '{0}/posts/{1}'.format(instance.author.username, filename)
+    return os.path.join(instance.author.username, 'posts', filename)
 
 class UserProfile(models.Model):
     # This maps each UserProfile to have a field that inherits from the User Model
@@ -90,7 +87,7 @@ class Post(models.Model):
     likes = models.IntegerField(default=0)
 
     def __str__(self):
-        return "#{0} - {1}".format(self.id, self.description[0:30])
+        return "(#{0}) {1}: {2}".format(self.id, self.author.username, self.description[0:120])
 
 
 # The Comment model: Every comment must have an author, text, date, and
