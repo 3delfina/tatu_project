@@ -188,7 +188,6 @@ def add_user(entry):
     return user
 
 def add_user_profile(user, dict):
-    id = str(user.id)
     username = user.username
     avatar = os.path.join(username, 'avatar', "profile.jpg")
     profile = UserProfile.objects.get_or_create(user=user,
@@ -200,7 +199,6 @@ def add_user_profile(user, dict):
     return profile
 
 def add_post(user, dict):
-    id = str(user.id)
     username = user.username
     image = os.path.join(username, 'posts', dict["filename"])
     post = Post.objects.get_or_create(author=user,
