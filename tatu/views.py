@@ -167,6 +167,12 @@ def successView(request):
 
 def watercolour(request):
     img = Post.objects.all().filter(category='WC')
+    for i in img:
+        
+        i.coms=Comment.objects.all().filter(thread = i)
+    for i in img:
+        for com in i.coms:
+            print(com.thread)
     return render(request,'tatu/watercolour.html',{"img":img, 'media_url':settings.MEDIA_URL})
 
 def traditional(request):

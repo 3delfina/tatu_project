@@ -13,16 +13,16 @@
 </head>
 
 <body>
-{% for c in com %}
+{% for c in coms %}
 c
 {% endfor %}
 {% for i in img %}
-    <img  src="{{ MEDIA_URL }}{{ i.image }}" alt="fuc" width="300" height="300">
-<!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+    <img  src="{{ MEDIA_URL }}{{ i.image }}" alt="fuc" width="300px" height="300px">
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{i.id}}">Open Modal </button>
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal{{i.id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -30,12 +30,18 @@ c
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <img  src="{{ MEDIA_URL }}{{ i.author }}{{"/avatar/profile.jpg"}}" alt="fuc" width="90"height="90">
+                {{i.description}}
 
 
 
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+                {% for com in i.coms %}
+               <li> {{com.text}}</li>
+
+
+                {% endfor %}
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
