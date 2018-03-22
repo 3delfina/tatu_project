@@ -33,7 +33,7 @@ SECRET_KEY = 'l_jk%42e#r##u^2k21*en(!nlsvkhcdwm&$d27lgkw*l2c1$*9'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['http://tatu.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['http://rosscee98.pythonanywhere.com','127.0.0.1']
 
 
 
@@ -130,7 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATICFILES_DIRS = [STATIC_DIR]
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/tatu/tatu_project/static'
+STATIC_ROOT = '/home/rosscee98/tatu_project/static'
 #Email feature
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
