@@ -55,22 +55,18 @@ def populate():
     posts = {
         "jezza32": [
             {"category": "RL",
-             #"image": os.path.join(TATTOO_FOLDER, post.id),
-             "image": "Users/rossclark/workspace/pop/a",
              "description": "Perhaps the best tattoo I've ever completed! Ultra realistic.",
              "date": datetime.date(2018,3,16),
              "likes": 5}
         ],
         "xo_g1ve_m3_h0p3_xo": [
             {"category": "GM",
-             "image": "Users/rossclark/workspace/pop/b",
              "description": "aaa",
              "date": datetime.date(2018,3,12),
              "likes": 13}
         ],
         "pizzaboy82": [
             {"category": "BW",
-             "image": "Users/rossclark/workspace/pop/c",
              "description": "aaa",
              "date": datetime.date(2018,3,15),
              "likes": 2}
@@ -133,7 +129,7 @@ def add_post(user, dict):
     image = os.path.join('user_'+id, 'posts', 'tat.jpg')
     post = Post.objects.get_or_create(author=user,
                                       category=dict["category"],
-                                      image=dict["image"],
+                                      image=image,
                                       description=dict["description"],
                                       date=dict["date"],
                                       likes=dict["likes"])[0]
