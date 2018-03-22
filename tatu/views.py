@@ -164,3 +164,30 @@ def submit_comment(request):
 def successView(request):
     context_dict = {}
     return render(request, "tatu/success.html", context=context_dict)
+
+def watercolour(request):
+    return render(request,'tatu/watercolour.html',{})
+
+def traditional(request):
+    return render(request,'tatu/traditional.html',{})
+
+def realism(request):
+    return render(request,'tatu/realism.html',{})
+
+def tribal(request):
+    return render(request,'tatu/tribal.html',{})
+
+def dotwork(request):
+    return render(request,'tatu/dotwork.html',{})
+
+def japanese(request):
+    return render(request,'tatu/japanese.html',{})
+
+def geometric(request):
+    return render(request,'tatu/geometric.html',{})
+
+def lettering(request):
+    return render(request,'tatu/lettering.html',{})
+
+def blackwork(request):
+    return render(request,'tatu/blackwork.html',{})

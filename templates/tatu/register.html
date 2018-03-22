@@ -14,22 +14,45 @@
 </head>
 
 <body>
+
 <div class="navi">
     {% if registered %}
         <div class="reg">thank you for registering!
         <a href="{% url 'index' %}">Return to the homepage</a><br /></div>
     {% else %}
-        <div class="noreg">
-        <form id="user_form" method="post" action="{% url 'register' %}"
-              enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
+        {% for field in user_form %}
+        <p>
+            {{ field.label_tag }}<br>
+        <center>{{ field }}</center>
+            {% if field.help_text %}
 
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
 
-        <input type="submit" name="submit" value="Register" />
-        </form><div>
+        <div class="low">{{ field.help_text }}</div>
+            {% endif %}
+            {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        </p>
+        {% endfor %}
+        {% for field in profile_form %}
+        <p>
+            {{ field.label_tag }}<br>
+        <center>{{ field }}</center>
+
+            {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        </p>
+        {% endfor %}
+        <button type="submit">Sign up</button>
+    </form>
+
+
     {% endif %}
+
 </div>
+
 </body>
 </html>
