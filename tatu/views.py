@@ -166,7 +166,9 @@ def successView(request):
     return render(request, "tatu/success.html", context=context_dict)
 
 def watercolour(request):
-    return render(request,'tatu/watercolour.html',{})
+    img = Post.objects.all().filter(category='WC')
+
+    return render(request,'tatu/watercolour.html',{"img":img, 'media_url':settings.MEDIA_URL})
 
 def traditional(request):
     return render(request,'tatu/traditional.html',{})
