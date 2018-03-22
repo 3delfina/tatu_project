@@ -8,10 +8,11 @@ from django.conf import settings
 
 def user_avatar_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
+    # return 'user_{0}/avatar/{1}'.format(instance.user.id, filename)
+    return '{0}/avatar/{1}'.format(instance.user.username, filename)
 
 def user_image_path(instance, filename):
-    return 'user_{0}/posts/{1}'.format(instance.author.id, filename)
+    return '{0}/posts/{1}'.format(instance.author.username, filename)
 
 class UserProfile(models.Model):
     # This maps each UserProfile to have a field that inherits from the User Model

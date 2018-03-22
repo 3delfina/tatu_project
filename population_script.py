@@ -14,77 +14,157 @@ from imagekit.models import ProcessedImageField
 def populate():
 
     users = [
-        {"username": "jezza32",
-         "first_name": "John",
-         "last_name": "Smith",
-         "password": "password",
-         "email": "jezza32@gmail.com"},
         {"username": "xo_g1ve_m3_h0p3_xo",
          "first_name": "Hannah",
          "last_name": "Spritz",
          "password": "teletubbies32",
          "email": "hannah.spritz@gmail.com"},
-        {"username": "pizzaboy82",
-         "first_name": "Stephen",
+        {"username": "jezza32",
+         "first_name": "John",
+         "last_name": "Franco",
+         "password": "password",
+         "email": "jezza32@gmail.com"},
+        {"username": "pizzagirl82",
+         "first_name": "Sophie",
          "last_name": "O'Connelly",
          "password": "pizzaisthebest",
-         "email": "pizzaboy82@gmail.com"}
+         "email": "pizzagirl82@gmail.com"},
+        {"username": "bronzedidol",
+         "first_name": "Katie",
+         "last_name": "Mclaughlin",
+         "password": "mypasswordisthebestpassword",
+         "email": "bronzedidol@gmail.com"},
+        {"username": "miss.sporty132",
+         "first_name": "Emma",
+         "last_name": "Barton",
+         "password": "starwars3210",
+         "email": "emma.barton.designs@gmail.com"},
+        {"username": "solarsparkle",
+         "first_name": "Ruaridh",
+         "last_name": "O'Donahue",
+         "password": "aaaaaaaaaaaa1278",
+         "email": "solarsparkle@gmail.com"},
+        {"username": "tattooking",
+         "first_name": "Calum",
+         "last_name": "Crawford",
+         "password": "woohoo32!",
+         "email": "tattooking@gmail.com"},
+        {"username": "iHeartCookies",
+         "first_name": "Jennifer",
+         "last_name": "Armstrong",
+         "password": "yeaboii_19",
+         "email": "tattooqueen@gmail.com"},
+        {"username": "ToTaLeClipse",
+         "first_name": "Mark",
+         "last_name": "Tweedie",
+         "password": "chelseafc",
+         "email": "totaleclipse@gmail.com"},
+        {"username": "showstopper",
+         "first_name": "Simon",
+         "last_name": "Douglas",
+         "password": "bubbles32",
+         "email": "totaleclipse@gmail.com"},
     ]
 
     user_profiles = {
-        "jezza32": {
+        "xo_g1ve_m3_h0p3_xo": {
             "workplace": "Tattoo Heaven",
             "website": "www.tattooheaven.com",
             "phone_number": "07783745929"
         },
-        "xo_g1ve_m3_h0p3_xo": {
+        "jezza32": {
             "workplace": "Lucky Cat Tattoo",
             "website": "www.google.com",
             "phone_number": "07792825577"
         },
-        "pizzaboy82": {
+        "pizzagirl82": {
             "workplace": "Otzi Tattoos",
             "website": "www.otzitattoos.com",
-            "phone_number": "07783745929"
-        }
+            "phone_number": "07253012332"
+        },
+        "bronzedidol": {
+            "workplace": "Otzi Tattoos",
+            "website": "www.otzitattoos.com",
+            "phone_number": "07253012332"
+        },
+        "miss.sporty132": {
+            "workplace": "Creative Art Tattoo Studio",
+            "website": "www.creativearttattoo.com",
+            "phone_number": "01233748229"
+        },
+        "solarsparkle": {
+            "workplace": "Timeless Tattoos",
+            "website": "www.timelesstattoos.co.uk",
+            "phone_number": "01342882291"
+        },
+        "tattooking": {
+            "workplace": "Timeless Tattoos",
+            "website": "www.timelesstattoos.co.uk",
+            "phone_number": "01342882291"
+        },
+        "iHeartCookies": {
+            "workplace": "Blancolo Tattoo",
+            "website": "www.blancolotattoo.com",
+            "phone_number": "01325672812"
+        },
+        "ToTaLeClipse": {
+            "workplace": "Terry's Tattoo Studio",
+            "website": "www.terrystattoostudio.com",
+            "phone_number": "07839782557"
+        },
+        "showstopper": {
+            "workplace": "Sugar Skull Tattoos",
+            "website": "www.sugarskullglasgow.com",
+            "phone_number": "08255667829"
+        },
     }
 
 # each set of posts is attributed to a specific user.
 # each user has an associated list of posts they've created.
 # ISSUE: need to work out how to allow for dates in the past - get round auto_now_add
     posts = {
+        "xo_g1ve_m3_h0p3_xo": [
+            {"category": "GM",
+             "description": "aaa",
+             "date": datetime.date(2018, 3, 12),
+             "likes": 13,
+             "filename": "gm1.jpg"}
+        ],
         "jezza32": [
             {"category": "RL",
              "description": "Perhaps the best tattoo I've ever completed! Ultra realistic.",
              "date": datetime.date(2018,3,16),
-             "likes": 5}
+             "likes": 5,
+             "filename": "rl1.jpg"}
         ],
-        "xo_g1ve_m3_h0p3_xo": [
-            {"category": "GM",
-             "description": "aaa",
-             "date": datetime.date(2018,3,12),
-             "likes": 13}
-        ],
-        "pizzaboy82": [
+        "pizzagirl82": [
             {"category": "BW",
              "description": "aaa",
              "date": datetime.date(2018,3,15),
-             "likes": 2}
-        ]
+             "likes": 2,
+             "filename": "bw1.jpg"}
+        ],
+        "bronzedidol": [],
+        "miss.sporty132": [],
+        "solarsparkle": [],
+        "tattooking": [],
+        "iHeartCookies": [],
+        "ToTaLeClipse": [],
+        "showstopper": [],
     }
 
     comments = [
         {"text": "this tattoo sucks. die",
          "date": datetime.date(2018,3,20),
-         "poster": "jezza32",
+         "username": "jezza32",
          "post_id": 3},
         {"text": "This work is amazing! You should be proud!",
          "date": datetime.date(2018,3,19),
-         "poster": "xo_g1ve_m3_h0p3_xo",
+         "username": "xo_g1ve_m3_h0p3_xo",
          "post_id": 1},
         {"text": "uhm. it's interesting",
          "date": datetime.date(2018,3,17),
-         "poster": "pizzaboy82",
+         "username": "pizzagirl82",
          "post_id": 2}
     ]
 
@@ -109,7 +189,8 @@ def add_user(entry):
 
 def add_user_profile(user, dict):
     id = str(user.id)
-    avatar = os.path.join('user_'+id, 'avatar', "1.jpg")
+    username = user.username
+    avatar = os.path.join(username, 'avatar', "profile.jpg")
     profile = UserProfile.objects.get_or_create(user=user,
                                                 avatar=avatar,
                                                 workplace=dict["workplace"],
@@ -120,7 +201,8 @@ def add_user_profile(user, dict):
 
 def add_post(user, dict):
     id = str(user.id)
-    image = os.path.join('user_'+id, 'posts', 'tat.jpg')
+    username = user.username
+    image = os.path.join(username, 'posts', dict["filename"])
     post = Post.objects.get_or_create(author=user,
                                       category=dict["category"],
                                       image=image,
@@ -131,7 +213,7 @@ def add_post(user, dict):
     return post
 
 def add_comment(info):
-    user = User.objects.get(username=info["poster"])
+    user = User.objects.get(username=info["username"])
     user_profile = UserProfile.objects.get(user=user)
     post = Post.objects.get(id=info["post_id"])
 
