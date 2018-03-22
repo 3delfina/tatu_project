@@ -32,7 +32,7 @@ SECRET_KEY = 'l_jk%42e#r##u^2k21*en(!nlsvkhcdwm&$d27lgkw*l2c1$*9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://tatu.pythonanywhere.com']
+ALLOWED_HOSTS = ['http://tatu.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
