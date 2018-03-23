@@ -213,43 +213,145 @@ def realism(request):
 
 
 def tribal(request):
-    img = Post.objects.all().filter(category='TR')
+    current = request.user
+    img = Post.objects.all().filter(category='RL')
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/tribal.html', {"img": img, 'media_url': settings.MEDIA_URL})
+    return render(request, 'tatu/tribal.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def dotwork(request):
-    img = Post.objects.all().filter(category='DW')
+    current = request.user
+    img = Post.objects.all().filter(category='RL')
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/dotwork.html', {"img": img, 'media_url': settings.MEDIA_URL})
+    return render(request, 'tatu/dorwork.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def japanese(request):
-    img = Post.objects.all().filter(category='JP')
+    current = request.user
+    img = Post.objects.all().filter(category='RL')
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/japanese.html', {"img": img, 'media_url': settings.MEDIA_URL})
+    return render(request, 'tatu/japanese.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def geometric(request):
-    img = Post.objects.all().filter(category='GM')
+    current = request.user
+    img = Post.objects.all().filter(category='RL')
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/geometric.html', {"img": img, 'media_url': settings.MEDIA_URL})
+    return render(request, 'tatu/geometric.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def lettering(request):
-    img = Post.objects.all().filter(category='LT')
+    current = request.user
+    img = Post.objects.all().filter(category='RL')
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/lettering.html', {"img": img, 'media_url': settings.MEDIA_URL})
+    return render(request, 'tatu/lettering.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def blackwork(request):
-    img = Post.objects.all().filter(category='BW')
+    current = request.user
+    img = Post.objects.all().filter(category='RL')
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/blackwork.html', {"img": img, 'media_url': settings.MEDIA_URL})
+    return render(request, 'tatu/blackwork.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
