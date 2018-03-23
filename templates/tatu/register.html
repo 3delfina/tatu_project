@@ -21,8 +21,9 @@
         <a href="{% url 'index' %}">Return to the homepage</a><br /></div>
     {% else %}
     <form method="post">
+
         {% csrf_token %}
-        {% for field in user_form %}
+            <div class="right">{% for field in user_form %}
         <p>
             {{ field.label_tag }}<br>
         <center>{{ field }}</center>
@@ -35,8 +36,8 @@
         <p style="color: red">{{ error }}</p>
         {% endfor %}
         </p>
-        {% endfor %}
-        {% for field in profile_form %}
+        {% endfor %}</div>
+        <div class="left">{% for field in profile_form %}
         <p>
             {{ field.label_tag }}<br>
         <center>{{ field }}</center>
@@ -45,12 +46,14 @@
         <p style="color: red">{{ error }}</p>
         {% endfor %}
         </p>
-        {% endfor %}
-        <button type="submit">Sign up</button>
+            {% endfor %}
+        <div class="done">
+        <button type="submit">Sign up</button></div></div>
     </form>
 
 
     {% endif %}
+    </table>
 
 </div>
 

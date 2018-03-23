@@ -14,7 +14,7 @@ html,body {
 .navi{
 
 
-    width: 655px;
+    width: 650px;
     font-family: Arial;
     font-size: 13px;
     font-size: 1vw;
@@ -25,6 +25,17 @@ html,body {
     text-transform: uppercase;
     color: #c13399;
     text-align: center;
+    bottom: 200px;
+}
+.right{
+
+    float: left;
+    height: 300px;
+
+}
+.left{
+    float: right;
+    height: 300px;
 
 }
 .low{

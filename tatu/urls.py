@@ -38,4 +38,5 @@ urlpatterns = [
     url(r'^tattoos/japanese/$', views.japanese, name='tattoos'),
     url(r'^tattoos/lettering/$', views.lettering, name='tattoos'),
     url(r'^tattoos/blackwork/$', views.blackwork, name='tattoos'),
+
 ]

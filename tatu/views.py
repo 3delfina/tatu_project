@@ -77,7 +77,12 @@ def artists(request):
 
 @login_required
 def profile(request):
-    return render(request,'tatu/profile.html',{})
+
+    current = request.user
+    imgs=Post.objects.all().filter(author=current)
+
+
+    return render(request,'tatu/profile.html',{'current':current, 'imgs':imgs})
 
 def tattoos(request):
     return render(request,'tatu/tattoos.html',{})
@@ -130,6 +135,8 @@ def user_post(request):
             if 'image' in request.FILES:
                 post.image = request.FILES['image']
                 post.save()
+
+                return HttpResponseRedirect('/tatu/profile/')
             else:
                 print(post_form.errors)
     else:
@@ -170,31 +177,61 @@ def watercolour(request):
     for i in img:
 
         i.coms=Comment.objects.all().filter(thread = i)
-    for i in img:
-        for com in i.coms:
-            print(com.thread)
+
     return render(request,'tatu/watercolour.html',{"img":img, 'media_url':settings.MEDIA_URL})
 
 def traditional(request):
-    return render(request,'tatu/traditional.html',{})
+    img = Post.objects.all().filter(category='TD')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/traditional.html', {"img": img, 'media_url': settings.MEDIA_URL})
 
 def realism(request):
-    return render(request,'tatu/realism.html',{})
+    img = Post.objects.all().filter(category='RL')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/realism.html', {"img": img, 'media_url': settings.MEDIA_URL})
 
 def tribal(request):
-    return render(request,'tatu/tribal.html',{})
+    img = Post.objects.all().filter(category='TR')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/tribal.html', {"img": img, 'media_url': settings.MEDIA_URL})
 
 def dotwork(request):
-    return render(request,'tatu/dotwork.html',{})
+    img = Post.objects.all().filter(category='DW')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/dotwork.html', {"img": img, 'media_url': settings.MEDIA_URL})
 
 def japanese(request):
-    return render(request,'tatu/japanese.html',{})
+    img = Post.objects.all().filter(category='JP')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/japanese.html', {"img": img, 'media_url': settings.MEDIA_URL})
 
 def geometric(request):
-    return render(request,'tatu/geometric.html',{})
+    img = Post.objects.all().filter(category='GM')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/geometric.html', {"img": img, 'media_url': settings.MEDIA_URL})
 
 def lettering(request):
-    return render(request,'tatu/lettering.html',{})
+    img = Post.objects.all().filter(category='LT')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/lettering.html', {"img": img, 'media_url': settings.MEDIA_URL})
 
 def blackwork(request):
-    return render(request,'tatu/blackwork.html',{})
+    img = Post.objects.all().filter(category='BW')
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/blackwork.html', {"img": img, 'media_url': settings.MEDIA_URL})

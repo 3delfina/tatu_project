@@ -1,10 +1,69 @@
 <!DOCTYPE html>
+{% load staticfiles %} <!-- New line -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tatu</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/style2.css" %}">
+
+
+
+
 </head>
+
 <body>
 
+
+<div class="box"> {% for i in img %}
+
+    <img  src="{{ MEDIA_URL }}{{ i.image }}" alt="fuc" width="600px" height="600px" button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{i.id}}"></button>
+    <!-- Trigger the modal with a button -->
+
+    <!-- Modal -->
+    <div id="myModal{{i.id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="col-sm-3"><img class="img-circle"  src="{{ MEDIA_URL }}{{ i.author }}{{"/avatar/profile.jpg"}}" alt="fuc" width="90"height="90">
+                    </div>
+                    <div class="col-sm-4"><div class="row"><div class="name2">{{i.author}} </div></div>
+                        <div class="row"> {{i.description}}</div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-body">
+                    <div class="name2">Comments </div>
+                    {% for com in i.coms %}
+                    <p>{{com.poster}} says : {{com.text}}</p><br>
+
+
+                    {% endfor %}
+
+                </div>
+                <div class="modal-footer">
+                    <p>Likes : {{i.likes}}</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+
 </body>
-</html>
+</html>>
