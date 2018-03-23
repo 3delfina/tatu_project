@@ -163,7 +163,7 @@ def submit_comment(request):
     else:
         comment_form = CommentForm()
 
-    return render(request, 'tatu/test.html', {'comment_form': comment_form,
+    return render(request, 'tatu/base.html', {'comment_form': comment_form,
                                               'post': post,
                                               'comments': comments
                                               })
