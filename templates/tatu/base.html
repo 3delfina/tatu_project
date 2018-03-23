@@ -51,12 +51,12 @@
 
                 </div>
                 <div class="modal-footer">
-                    <p><form id="comment_form" method="post" action="{% url 'test' %}" enctype="multipart/form-data">
+                    <p><form id="comment_form" method="post" action="." enctype="multipart/form-data">
                         {% csrf_token %}
 
                         {{ comment_form.as_p }}
 
-                        <input type="submit" name="submit" value="Submit" />
+                        <input type="submit" name="cat{{ i.id }}" value="Submit" />
                     </form></p>
                     <p>Likes : {{i.likes}}</p>
 
