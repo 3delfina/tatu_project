@@ -15,7 +15,7 @@
 <body>
 <div class="myzone">
 
-    <div class="col-sm-4"><div class="row"> <img class="img-circle" src="{{ MEDIA_URL }}{{ current.username }}{{"/avatar/profile.jpg"}}" alt="profile_picture"  border-radius: 50%; ></div></div>
+    <div class="col-sm-4"><div class="row"> <img class="img-circle" src="{ current.userprofile.avatar.url }" alt="profile_picture"  border-radius: 50%; ></div></div>
     <div class="col-sm-4">
         <div class="row"><div class="name">{{current.username}} </div></div>
         <div class="row"> <a href='/tatu/upload/'>upload</a></div>
