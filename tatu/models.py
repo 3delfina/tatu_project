@@ -22,7 +22,7 @@ class UserProfile(models.Model):
     # field for user avatar, defaults to /media/default/avatar.png
     avatar = ProcessedImageField(upload_to=user_avatar_path,
                                  processors=[ResizeToFill(150, 150)],
-                                 format='JPEG',
+                                 #format='jpg',
                                  options={'quality': 100},
                                  default='default/avatar.png',
                                  blank=True)
