@@ -77,12 +77,30 @@ def artists(request):
 
 @login_required
 def profile(request):
-
     current = request.user
     imgs=Post.objects.all().filter(author=current)
 
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
+    for i in imgs:
+        i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request,'tatu/profile.html',{'current':current, 'imgs':imgs})
+    return render(request, 'tatu/profile.html',
+                  {'comment_form': comment_form, 'imgs': imgs, 'media_url': settings.MEDIA_URL, 'current': current})
+
+
 
 def tattoos(request):
     return render(request,'tatu/tattoos.html',{})
@@ -135,8 +153,6 @@ def user_post(request):
             if 'image' in request.FILES:
                 post.image = request.FILES['image']
                 post.save()
-
-                return HttpResponseRedirect('/tatu/profile/')
             else:
                 print(post_form.errors)
     else:
@@ -173,20 +189,52 @@ def successView(request):
     return render(request, "tatu/success.html", context=context_dict)
 
 def watercolour(request):
-    img = Post.objects.all().filter(category='WC')
     current = request.user
-    for i in img:
+    img = Post.objects.all().filter(category='RL')
 
-        i.coms=Comment.objects.all().filter(thread = i)
-
-    return render(request,'tatu/watercolour.html',{"img":img,'current':current,'media_url':settings.MEDIA_URL})
-
-def traditional(request):
-    img = Post.objects.all().filter(category='TD')
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/traditional.html', {"img": img, 'media_url': settings.MEDIA_URL})
+    return render(request, 'tatu/watercolor.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
+
+def traditional(request):
+    current = request.user
+    img = Post.objects.all().filter(category='RL')
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        # next(v for k, v in my_dict.items() if 'Date' in k)
+        postnum = list(request.POST.keys())[2][3:]
+        currentp = Post.objects.get(pk=postnum)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.thread = currentp
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/traditional.html',
+                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def realism(request):
     current = request.user
