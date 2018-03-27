@@ -14,11 +14,12 @@ function create_comment() {
         data : { the_comment : $('#comment-text').val() }, // data sent with the post request
 
         // handle a successful response
-        success : function(json) {
-            $('#comment-text').val(''); // remove the value from the input
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
-        },
+	success : function(json) {
+		$('#comment-text').val(''); // remove the value from the input
+		console.log(json); // log the returned json to the console
+		$("#talk").prepend("<li><strong>"+json.text+"</strong> - <em> "+json.author+"</em> - <span> "+json.created+"</span></li>");
+		console.log("success"); // another sanity check
+	},
 
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
