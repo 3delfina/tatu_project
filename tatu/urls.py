@@ -30,14 +30,6 @@ urlpatterns = [
     url(r'^base/$', views.submit_comment, name='upload'),
     url(r'^success/$', views.successView, name='success'),
     url(r'^test/$', views.submit_comment, name='test'),
-    url(r'^tattoos/watercolour/$', views.watercolour, name='water'),
-    url(r'^tattoos/traditional/$', views.traditional, name='tattoos'),
-    url(r'^tattoos/realism/$', views.realism, name='tattoos'),
-    url(r'^tattoos/tribal/$', views.tribal, name='tattoos'),
-    url(r'^tattoos/dotwork/$', views.dotwork, name='tattoos'),
-    url(r'^tattoos/geometric/$', views.geometric, name='tattoos'),
-    url(r'^tattoos/japanese/$', views.japanese, name='tattoos'),
-    url(r'^tattoos/lettering/$', views.lettering, name='tattoos'),
-    url(r'^tattoos/blackwork/$', views.blackwork, name='tattoos'),
-
+    url(r'^<str:category>/$', views.tattoos, name='tattoos'),
+    url(r'^)
 ]
