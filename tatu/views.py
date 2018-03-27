@@ -190,7 +190,7 @@ def successView(request):
 
 def watercolour(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='WC')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -214,7 +214,7 @@ def watercolour(request):
 
 def traditional(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='TD')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -262,7 +262,7 @@ def realism(request):
 
 def tribal(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='TR')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -286,7 +286,7 @@ def tribal(request):
 
 def dotwork(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='DW')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -310,7 +310,7 @@ def dotwork(request):
 
 def japanese(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='JP')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -334,7 +334,7 @@ def japanese(request):
 
 def geometric(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='GM')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -358,7 +358,7 @@ def geometric(request):
 
 def lettering(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='LT')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -382,7 +382,7 @@ def lettering(request):
 
 def blackwork(request):
     current = request.user
-    img = Post.objects.all().filter(category='RL')
+    img = Post.objects.all().filter(category='BW')
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
