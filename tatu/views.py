@@ -166,23 +166,53 @@ def user_post(request):
 def submit_comment(request):
     post = Post.objects.get(pk=1)
     comments = post.comments.all()
+    #if request.method == 'POST':
+    #    comment_form = CommentForm(data=request.POST)
     if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = post
-            comment.poster = request.user
-            comment.save()
-        else:
-            print(comment_form.errors)
+        comment_text = request.POST.get('the_comment')
+        response_data = {}
+        comment = Post(text=comment_text, author=request.user)
+        comment.save()
+        response_data['result'] = 'Create post successful!'
+        response_data['postpk'] = comment.pk
+        response_data['text'] = comment.text
+        response_data['created'] = comment.created.strftime('%B %d, %Y %I:%M %p')
+        response_data['author'] = comment.author.username
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
     else:
-        comment_form = CommentForm()
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+    
+    #    #if comment_form.is_valid():
+    #    #    comment = comment_form.save(commit=False)
+    #    #   comment.thread = post
+    #    #   comment.poster = request.user
+    #    #   comment.save()
+    #    #else:
+    #    #   print(comment_form.errors)
+    #else:
+    #    comment_form = CommentForm()
 
-    return render(request, 'tatu/base.html', {'comment_form': comment_form,
-                                              'post': post,
-                                              'comments': comments
-                                              })
+    #return render(request, 'tatu/base.html', {'comment_form': comment_form,
+    #                                          'post': post,
+    #                                          'comments': comments
+    #                                          })
+
+
+
+
+        
+
+
+
+
+
+
 
 def successView(request):
     context_dict = {}

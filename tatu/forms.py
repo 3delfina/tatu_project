@@ -8,7 +8,14 @@ from imagekit.processors import ResizeToFill
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('text',)
+        fields = ['text',]
+        widgets = {
+            'text': forms.TextInput(attrs={
+                'id': 'comment-text', 
+                'required': True, 
+                'placeholder': 'What do you think...'
+            }),
+		}
 
 class PostForm(forms.ModelForm):
     class Meta:
