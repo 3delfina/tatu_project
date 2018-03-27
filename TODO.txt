@@ -1,0 +1,11 @@
+We need to do:
+-user profiles
+-pretty linking between pages
+-unit testing
+-add to favourites
+-favourites displayed on the page
+-redirect to home page after registration
+-change the text size under the username box in the register page
+-notify the user when passwords don't match
+-likes should be clickable
+-README needs to be updated with all the references!
