@@ -8,10 +8,13 @@ from django.conf import settings
 
 
 def user_avatar_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return '{0}/avatar/{1}'.format(instance.user.username, filename)
+    # avatars will be uploaded to <MEDIA_ROOT>/<username>/avatar/<filename>
+    return os.path.join(instance.user.username, 'avatar', filename)
+
 def user_image_path(instance, filename):
-    return '{0}/posts/{1}'.format(instance.author.username, filename)
+    # tattoo images will be uploaded to <MEDIA_ROOT>/<username>/posts/<filename>
+    return os.path.join(instance.author.username, 'posts', filename)
+
 class UserProfile(models.Model):
     # This maps each UserProfile to have a field that inherits from the User Model
     # The User Model has username, password, email etc fields already associated with it
@@ -106,4 +109,4 @@ class Comment(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "#{0} - {1}".format(self.id, self.text[0:30])
+        return "(#{0}) {1}: {2}".format(self.id, self.poster.user.username, self.text[0:120])

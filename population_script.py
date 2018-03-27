@@ -9,8 +9,6 @@ from django.contrib.auth.models import User
 import datetime
 from imagekit.models import ProcessedImageField
 
-## NOTE: RUN THE POPULATION SCRIPT FIRST, BEFORE YOU CREATE A NEW SUPERUSER ACCOUNT!
-
 def populate():
 
     users = [
@@ -288,7 +286,7 @@ def populate():
     comments = [
         {"text": "this tattoo sucks. die",
          "date": datetime.date(2018,3,20),
-         "username": "jezza32",
+         "username": "showstopper",
          "post_id": 3},
         {"text": "This work is amazing! You should be proud!",
          "date": datetime.date(2018,3,19),
@@ -378,6 +376,7 @@ def add_user(entry):
 def add_user_profile(user, dict):
     username = user.username
     avatar = os.path.join(username, 'avatar', "profile.jpg")
+    # 'avatar' contains path <MEDIA_ROOT>/<username>/avatar/profile.jpg
     profile = UserProfile.objects.get_or_create(user=user,
                                                 avatar=avatar,
                                                 workplace=dict["workplace"],
@@ -389,6 +388,7 @@ def add_user_profile(user, dict):
 def add_post(user, dict):
     username = user.username
     image = os.path.join(username, 'posts', dict["filename"])
+    # 'image' contains path <MEDIA_ROOT>/<username>/posts/<filename>
     post = Post.objects.get_or_create(author=user,
                                       category=dict["category"],
                                       image=image,
@@ -403,7 +403,6 @@ def add_comment(info):
     user_profile = UserProfile.objects.get(user=user)
     post = Post.objects.get(id=info["post_id"])
 
-    # ISSUE: why is the tuple necessary? get_or_create returns tuple, but isn't problematic elsewhere
     # ISSUE: must add date to get_or_create function - override auto_add_now in DateTimeField
     comment, aaa = Comment.objects.get_or_create(thread=post,
                                                  poster=user_profile,
