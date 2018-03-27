@@ -44,12 +44,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="name2">Comments </div>
-                    {% for com in i.coms %}
-                    <p>{{com.poster}} says : {{com.text}}</p><br>
+					<ul id="talk">
+						{% for com in i.coms %}
+							<p>{{com.poster}} says : {{com.text}}</p><br>
 
 
-                    {% endfor %}
-
+						{% endfor %}
+					</ul>
                 </div>
                 <div class="modal-footer">
                     <p><form id="comment_form" method="post" action="." enctype="multipart/form-data">
@@ -75,4 +76,6 @@
 
 
 </body>
+<script type="text/javascript" src="../../../static/js/main.js"></script>
+
 </html>
