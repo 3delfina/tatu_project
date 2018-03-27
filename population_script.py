@@ -8,6 +8,9 @@ from tatu.models import UserProfile, Post, Comment
 from django.contrib.auth.models import User
 import datetime
 from imagekit.models import ProcessedImageField
+from django.core.files.uploadedfile import SimpleUploadedFile
+
+MEDIA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'media')
 
 def populate():
 
@@ -357,7 +360,7 @@ def populate():
     for ix, user_info in enumerate(users):
         user = add_user(user_info)
         username = user.get_username()
-        profile = add_user_profile(user, user_profiles[username])
+        add_user_profile(user, user_profiles[username])
         for post_info in posts[username]:
             add_post(user, post_info)
 
@@ -375,10 +378,13 @@ def add_user(entry):
 
 def add_user_profile(user, dict):
     username = user.username
-    avatar = os.path.join(username, 'avatar', "profile.jpg")
-    # 'avatar' contains path <MEDIA_ROOT>/<username>/avatar/profile.jpg
+    path = os.path.join('pop', 'avis', username+'.jpg')
+    # path now stores <MEDIA_DIR>/pop/avis/<username>.jpg
+    image = SimpleUploadedFile(name='avatar.jpg',
+                               content=open(os.path.join(MEDIA_DIR, path), 'rb').read(),
+                               content_type='image/jpeg')
     profile = UserProfile.objects.get_or_create(user=user,
-                                                avatar=avatar,
+                                                avatar=image,
                                                 workplace=dict["workplace"],
                                                 website=dict["website"],
                                                 phone_number=dict["phone_number"])[0]
@@ -386,9 +392,12 @@ def add_user_profile(user, dict):
     return profile
 
 def add_post(user, dict):
-    username = user.username
-    image = os.path.join(username, 'posts', dict["filename"])
-    # 'image' contains path <MEDIA_ROOT>/<username>/posts/<filename>
+    path = os.path.join('pop', 'tats', dict["category"], dict["filename"])
+    # path now stores <MEDIA_DIR>/pop/tats/<category>/<filename>
+    # note that the filename already has .jpg attached to the end
+    image = SimpleUploadedFile(name=dict["filename"],
+                               content=open(os.path.join(MEDIA_DIR, path), 'rb').read(),
+                               content_type='image/jpeg')
     post = Post.objects.get_or_create(author=user,
                                       category=dict["category"],
                                       image=image,
