@@ -9,3 +9,4 @@ We need to do:
 -notify the user when passwords don't match
 -likes should be clickable
 -README needs to be updated with all the references!
+-NON_USER SHOULD NOT BE ABLE TO write comments
