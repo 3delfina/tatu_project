@@ -209,7 +209,7 @@ def watercolour(request):
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/watercolor.html',
+    return render(request, 'tatu/watercolour.html',
                   {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def traditional(request):
@@ -305,7 +305,7 @@ def dotwork(request):
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/dorwork.html',
+    return render(request, 'tatu/dotwork.html',
                   {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
 
 def japanese(request):
