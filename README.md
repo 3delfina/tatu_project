@@ -5,3 +5,4 @@ External sources (code, libraries, APIs):
 4. https://realpython.com/django-and-ajax-form-submissions/ tutorial on using AJAX in form submissions/
 5. https://wsvincent.com/django-contact-form/ tutorial on "contact us" form
 6. Images sourced from Pinterest
+7. Tutorials from https://www.w3schools.com/ for CSS and HTML
