@@ -75,6 +75,7 @@ def user_login(request):
 def artists(request):
     return render(request,'tatu/artists.html',{})
 
+
 @login_required
 def profile(request):
     current = request.user
@@ -101,13 +102,8 @@ def profile(request):
                   {'comment_form': comment_form, 'imgs': imgs, 'media_url': settings.MEDIA_URL, 'current': current})
 
 
-
-def tattoos(request):
-    return render(request,'tatu/tattoos.html',{})
-
 def about(request):
     return render(request,'tatu/about.html',{})
-
 
 
 def contact(request):
@@ -218,218 +214,42 @@ def successView(request):
     context_dict = {}
     return render(request, "tatu/success.html", context=context_dict)
 
-def watercolour(request):
-    current = request.user
-    img = Post.objects.all().filter(category='WC')
+def tattoos(request, category):
+    context_dict = {}
 
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
+    try:
+        # Get the enum name e.g. URL reads 'traditional' becomes enum name 'TRADITIONAL'
+        category_enum = category.upper()
+        
+        # Get all the posts associated with this category
+        img = Post.objects.all().filter(category=category_enum)
+        
+        # Get the current users User object
+        current = request.user
+
+        context_dict['current'] = current
+        context_dict['img'] = img
+        context_dict['category'] = category
+
+        # Get the comment form for the current post
+        if request.method == 'POST':
+            comment_form = CommentForm(data=request.POST)
+            postnum = list(request.POST.keys())[2][3:]
+            currentp = Post.objects.get(pk=postnum)
+
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.thread = currentp
+                comment.poster = request.user.userprofile
+                comment.save()
+            else:
+                print(comment_form.errors)
         else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
+            comment_form = CommentForm()
+        for i in img:
+            i.coms = Comment.objects.all().filter(thread=i)
 
-    return render(request, 'tatu/watercolour.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
+    return render(request, 
+                  'tatu/category.html',
+                  context=context_dict})
 
-def traditional(request):
-    current = request.user
-    img = Post.objects.all().filter(category='TD')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/traditional.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
-
-def realism(request):
-    current = request.user
-    img = Post.objects.all().filter(category='RL')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        #next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/realism.html', {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
-
-
-def tribal(request):
-    current = request.user
-    img = Post.objects.all().filter(category='TR')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/tribal.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
-
-def dotwork(request):
-    current = request.user
-    img = Post.objects.all().filter(category='DW')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/dotwork.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
-
-def japanese(request):
-    current = request.user
-    img = Post.objects.all().filter(category='JP')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/japanese.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
-
-def geometric(request):
-    current = request.user
-    img = Post.objects.all().filter(category='GM')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/geometric.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
-
-def lettering(request):
-    current = request.user
-    img = Post.objects.all().filter(category='LT')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/lettering.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
-
-def blackwork(request):
-    current = request.user
-    img = Post.objects.all().filter(category='BW')
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in img:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/blackwork.html',
-                  {'comment_form': comment_form, 'img': img, 'media_url': settings.MEDIA_URL, 'current': current})
