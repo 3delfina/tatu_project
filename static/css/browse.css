@@ -68,6 +68,7 @@ html,body {
 
 .dropdown:hover .dropdown-content {
     display: block;
+	position: absolute;
 }
 
 .dropdown:hover .dropbtn {
