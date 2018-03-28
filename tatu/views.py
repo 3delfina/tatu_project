@@ -170,6 +170,7 @@ def successView(request):
 
 
 # This is the main view for displaying posts for every category
+@login_required
 def tattoos(request, category):
     context_dict = {}
 
@@ -243,6 +244,7 @@ def tattoos(request, category):
 
 
 # This is the main view for displaying posts for every category
+@login_required
 def profile(request, userid):
     context_dict = {}
 
