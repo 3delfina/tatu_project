@@ -250,10 +250,14 @@ def profile(request, userid):
 
     # Get all the posts objects associated with this category (All posts made under Traditional
     # for example)
+    userid = int(userid)
     img = Post.objects.all().filter(author__id=userid)
+
+    #print(type(userid))
 
     # Get the current users User object
     current = request.user
+    #print(type(current.id))
         
     favs = current.userprofile.favourites.all()
 
