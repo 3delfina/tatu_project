@@ -252,6 +252,7 @@ def profile(request, userid):
     # for example)
     userid = int(userid)
     img = Post.objects.all().filter(author__id=userid)
+    profile = User.objects.get(id=userid)
 
     #print(type(userid))
 
@@ -265,6 +266,7 @@ def profile(request, userid):
     context_dict['current'] = current
     context_dict['img'] = img
     context_dict['userid'] = userid
+    context_dict['profile']= profile
 
     if current.id != userid:
         other = UserProfile.objects.get(id=userid)
@@ -322,7 +324,7 @@ def profile(request, userid):
         
     context_dict['comment_form'] = comment_form
 
-    # SUM CRISSIE BS
+    # SUM CRISSIE BS #lol mean u want sum fight
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
         i.likes = i.like_set.all().count()

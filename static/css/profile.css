@@ -1,0 +1,19 @@
+.img-circle {
+    border-radius: 50%;
+}
+
+.box {
+    position: relative;
+
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+
+}
+.top_zone{
+    position: relative;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
