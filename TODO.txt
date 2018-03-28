@@ -10,3 +10,43 @@ We need to do:
 -likes should be clickable
 -README needs to be updated with all the references!
 -NON_USER SHOULD NOT BE ABLE TO write comments
+-COMMENT YOUR CODE
+
+Before 5 pm MUST CHECK:
+1. requirements.txt has all the packages
+2. database and migrations files removed from github
+3. population_script.py works
+4. project_group8A will be submitted on moodle - has to contain external resources
+
+@EVERYONE!!!
+EVEN BOOTSTRAP IS CONSIDERED AS AN EXTERNAL RESOURCE
+external sources used are: code, libraries, APIs
+add everything to readme, I'll copy it to the file project_group
+4. If you have used external sources, you should acknowledge them in a README file in
+the top-level folder of your project. Failure to acknowledge external sources could
+result in a deduction of marks under the “main functionality” heading.
+
+5.
+The user should be able to access all of the functionality of the application without
+encountering Django error messages. You should thoroughly test your application to
+ensure that this is the case.
+
+6. @Cristina
+If browser window size changed, is the change handled neatly?
+text in the registration page
+
+7.Templates inherit from base - so we need a template with the site menu (login, home etc)
+
+8. URLs are relative, i.e., use the {% url ..%} tag
+
+9. Code contains helper functions/classes (if required)
+
+10. Code is readable, clear and commented where appropriate - COMMENT YOUR CODE
+
+11.  CSS and Javascript are kept separate from templates (i.e., not inline)
+
+12.  No repetition of code blocks in the views or templates
+
+13.Unit tests are included - 4 points
+
+
