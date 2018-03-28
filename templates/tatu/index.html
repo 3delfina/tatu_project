@@ -16,7 +16,7 @@
 	<body>
 	    <div class="navi">
             {% if user.is_authenticated %}
-            <a href='/tatu/profile/'>profile | </a>
+            <a href='{% url 'profile' current.id %}'>profile | </a>
             <a href="{% url 'logout' %}">logout | </a>
             {% else %}
             <a href='/tatu/login/'>Login | </a>

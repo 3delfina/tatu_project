@@ -16,7 +16,7 @@ from .forms import ContactForm
 # Create your views here.
 
 def index(request):
-    context_dict = {}
+    context_dict = {'current': request.user}
     return render(request, 'tatu/index.html', context=context_dict)
 
 
@@ -74,33 +74,6 @@ def user_login(request):
 
 def artists(request):
     return render(request,'tatu/artists.html',{})
-
-
-@login_required
-def profile(request):
-    current = request.user
-    imgs=Post.objects.all().filter(author=current)
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dddict.items() if 'Date' in k)
-        postnum = list(request.POST.keys())[2][3:]
-        currentp = Post.objects.get(pk=postnum)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.thread = currentp
-            comment.poster = request.user.userprofile
-            comment.save()
-        else:
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm()
-    for i in imgs:
-        i.coms = Comment.objects.all().filter(thread=i)
-
-    return render(request, 'tatu/profile.html',
-                  {'comment_form': comment_form, 'imgs': imgs, 'media_url': settings.MEDIA_URL, 'current': current})
-
 
 def about(request):
     return render(request,'tatu/about.html',{})
@@ -217,8 +190,8 @@ def tattoos(request, category):
     # If a POST request has been made and the POST data contains 'lke' in its keys 
     if request.method == 'POST' and any(item.startswith('lke') for item in list(request.POST.keys())):
         
-        # Get the Post object number from the POST data
-        postnum = [i for i in list(request.POST.keys()) if i.startswith('lke')][3:]
+        # Get the Post object number from the POST data that contains 'lke' and grab the number
+        postnum = [i for i in list(request.POST.keys()) if i.startswith('lke')][0][3:]
         
         postobj = Post.objects.get(pk=postnum)
 
@@ -236,7 +209,7 @@ def tattoos(request, category):
 
         # This searches the POST dictionary for the 3rd item, the name field of the 
         # <input type=submit ... button, and grabs it, which contains the post ID
-        postnum = [i for i in list(request.POST.keys()) if i.startswith('com')][3:]
+        postnum = [i for i in list(request.POST.keys()) if i.startswith('com')][0][3:]
 
         # Get the Post object associated with the ID we just got, as that's the Post we want
         # to reply to
@@ -266,5 +239,89 @@ def tattoos(request, category):
 
 
     return render(request, 'tatu/category.html',
+                  context=context_dict)
+
+
+# This is the main view for displaying posts for every category
+def profile(request, userid):
+    context_dict = {}
+
+    # Get all the posts objects associated with this category (All posts made under Traditional
+    # for example)
+    img = Post.objects.all().filter(author__id=userid)
+
+    # Get the current users User object
+    current = request.user
+        
+    favs = current.userprofile.favourites.all()
+
+    context_dict['favs'] = favs
+    context_dict['current'] = current
+    context_dict['img'] = img
+    context_dict['userid'] = userid
+
+    if current.id != userid:
+        other = UserProfile.objects.get(id=userid)
+        context_dict['other'] = other
+
+    if request.method == 'POST' and any(item.startswith('fav') for item in list(request.POST.keys())):
+        new = UserProfile.objects.get(id=userid)
+        current.userprofile.favourites.add(new) 
+
+        
+
+    # If a POST request has been made and the POST data contains 'lke' in its keys 
+    if request.method == 'POST' and any(item.startswith('lke') for item in list(request.POST.keys())):
+        
+        print([i for i in list(request.POST.keys()) if i.startswith('lke')])
+        # Get the Post object number from the POST data that contains 'lke' and grab the number
+        postnum = [i for i in list(request.POST.keys()) if i.startswith('lke')][0][3:]
+        print(postnum) 
+        postobj = Post.objects.get(pk=postnum)
+
+        new_like, created = Like.objects.get_or_create(user=request.user, post=postobj)
+        if not created:
+            print("Error like already made")
+        else:
+            postobj.likes = postobj.like_set.all().count()
+
+    # If a POST request has been made a via a form
+    if request.method == 'POST' and any(item.startswith('com') for item in list(request.POST.keys())):
+
+        # Load the comment form with extra information from the POST data dictionary of the request
+        comment_form = CommentForm(data=request.POST)
+
+        # This searches the POST dictionary for the 3rd item, the name field of the 
+        # <input type=submit ... button, and grabs it, which contains the post ID
+        postnum = [i for i in list(request.POST.keys()) if i.startswith('com')][0][3:]
+
+        # Get the Post object associated with the ID we just got, as that's the Post we want
+        # to reply to
+        postobj = Post.objects.get(pk=postnum)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+
+            # Save the thread the comment is replying to to be the Post object
+            comment.thread = postobj
+
+            # Save the author of this comment to be the current user (specifically the UserProfile
+            # Associated with that user, so that we can get avatars etc)
+            comment.poster = request.user.userprofile
+            comment.save()
+        else:
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
+        
+    context_dict['comment_form'] = comment_form
+
+    # SUM CRISSIE BS
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+        i.likes = i.like_set.all().count()
+
+
+    return render(request, 'tatu/profile.html',
                   context=context_dict)
 

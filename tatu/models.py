@@ -34,6 +34,8 @@ class UserProfile(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$') 
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
+    favourites = models.ManyToManyField("self", symmetrical=False, blank=True)
+
     # for whenever a method in a view etc calls str() on this object
     def __str__(self):
         return self.user.username

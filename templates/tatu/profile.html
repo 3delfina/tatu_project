@@ -1,19 +1,25 @@
+{% extends 'tatu/Browse_base.html' %}
 <!DOCTYPE html>
 {% load staticfiles %} <!-- New line -->
-<html>
-<head>
-    <title>Tatu</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static "css/style2.css" %}">
+<div>
+    {{ current.id }} {{userid}} 
+{% if current.id != userid %}
+    {% if other in favs %}
+        <p>You've favourited this person!!</p>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" class="btn" value="Favourite!" name="fav">
+        </form>
+    {% endif %}
+{% else %}
+    {% for fav in favs %}
+        <li><a href='{% url 'profile' fav.id %}'>{{ fav.username }}</a></li>
+    {% endfor %}
+{% endif %}
+</div>
 
-</head>
-<body>
 
 
-</body>
-</html>
+

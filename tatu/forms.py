@@ -49,7 +49,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('avatar', 'phone_number', 'website')
-        exclude = ('user',)
+        exclude = ('user', 'favourites')
 
 class ContactForm(forms.Form):
     your_name = forms.CharField(required=True)
