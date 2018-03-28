@@ -39,11 +39,6 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-class Like(models.Model):
-    user = models.FoeignKey(User)
-    post = models.ForeignKey(Post)
-
-
 # The Post model: Every post must have an image, description, number of likes
 #                 and many posts may belong to only one Category and one User
 class Post(models.Model):
@@ -91,6 +86,16 @@ class Post(models.Model):
     
     description = models.CharField(max_length=280)
     date = models.DateField(auto_now_add=True)
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             )
+    post = models.ForeignKey(Post, 
+                             on_delete=models.CASCADE, 
+                             related_name='likes',)
+
 
     def __str__(self):
         return "(#{0}) {1}: {2}".format(self.id, self.author.username, self.description[0:120])

@@ -17,15 +17,9 @@
 <body>
 <div class="navi">
 
-    <a href='/tatu/watercolour'>watercolour | </a>
-    <a href='/tatu/traditional'>traditional | </a>
-    <a href='/tatu/realism'>realism | </a>
-    <a href='/tatu/tribal'>tribal | </a>
-    <a href='/tatu/dotwork'>dotwork | </a>
-    <a href='/tatu/geometric'>geometric | </a>
-    <a href='/tatu/japanese'>japanese | </a>
-    <a href='/tatu/lettering'>lettering | </a>
-    <a href='/tatu/blackwork'>blackwork </a>
+{% for category in category_list %}
+    <a href='{% url 'tattoos' category %}'>{{ category }}</a>
+{% endfor %}
 
 
 </div>

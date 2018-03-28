@@ -25,11 +25,8 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^artists/$', views.artists, name='artists'),
     url(r'^profile/$', views.profile, name='profile'),
-    url(r'^tattoos/$', views.tattoos, name='tattoos'),
+    url(r'^navigate/$', views.navigate, name='navigate'),
     url(r'^upload/$', views.user_post, name='upload'),
-    url(r'^base/$', views.submit_comment, name='upload'),
     url(r'^success/$', views.successView, name='success'),
-    url(r'^test/$', views.submit_comment, name='test'),
-    url(r'^<str:category>/$', views.tattoos, name='tattoos'),
-    url(r'^)
+    url(r'^(?P<category>[-\w]+)/$', views.tattoos, name='tattoos'),
 ]

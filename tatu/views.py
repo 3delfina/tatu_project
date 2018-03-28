@@ -83,7 +83,7 @@ def profile(request):
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
-        # next(v for k, v in my_dict.items() if 'Date' in k)
+        # next(v for k, v in my_dddict.items() if 'Date' in k)
         postnum = list(request.POST.keys())[2][3:]
         currentp = Post.objects.get(pk=postnum)
         if comment_form.is_valid():
@@ -104,6 +104,12 @@ def profile(request):
 
 def about(request):
     return render(request,'tatu/about.html',{})
+
+def navigate(request):
+    category_list = [ i[1].lower() for i in Post.CATEGORIES ]
+    for category in category_list:
+        print(category)
+    return render(request,'tatu/navigate.html',{'category_list':category_list})
 
 
 def contact(request):
@@ -158,98 +164,90 @@ def user_post(request):
                                                 })
 
 
-@login_required
-def submit_comment(request):
-    post = Post.objects.get(pk=1)
-    comments = post.comments.all()
-    #if request.method == 'POST':
-    #    comment_form = CommentForm(data=request.POST)
-    if request.method == 'POST':
-        comment_text = request.POST.get('the_comment')
-        response_data = {}
-        comment = Post(text=comment_text, author=request.user)
-        comment.save()
-        response_data['result'] = 'Create post successful!'
-        response_data['postpk'] = comment.pk
-        response_data['text'] = comment.text
-        response_data['created'] = comment.created.strftime('%B %d, %Y %I:%M %p')
-        response_data['author'] = comment.author.username
-        return HttpResponse(
-            json.dumps(response_data),
-            content_type="application/json"
-        )
-    else:
-        return HttpResponse(
-            json.dumps({"nothing to see": "this isn't happening"}),
-            content_type="application/json"
-        )
-    
-    #    #if comment_form.is_valid():
-    #    #    comment = comment_form.save(commit=False)
-    #    #   comment.thread = post
-    #    #   comment.poster = request.user
-    #    #   comment.save()
-    #    #else:
-    #    #   print(comment_form.errors)
-    #else:
-    #    comment_form = CommentForm()
-
-    #return render(request, 'tatu/base.html', {'comment_form': comment_form,
-    #                                          'post': post,
-    #                                          'comments': comments
-    #                                          })
-
-
-
-
-        
-
-
-
-
-
+#@login_required
+#def submit_comment(request):
+#    post = Post.objects.get(pk=1)
+#    comments = post.comments.all()
+#    #if request.method == 'POST':
+#    #    comment_form = CommentForm(data=request.POST)
+#    if request.method == 'POST':
+#        comment_text = request.POST.get('the_comment')
+#        response_data = {}
+#        comment = Post(text=comment_text, author=request.user)
+#        comment.save()
+#        response_data['result'] = 'Create post successful!'
+#        response_data['postpk'] = comment.pk
+#        response_data['text'] = comment.text
+#        response_data['created'] = comment.created.strftime('%B %d, %Y %I:%M %p')
+#        response_data['author'] = comment.author.username
+#        return HttpResponse(
+#            json.dumps(response_data),
+#            content_type="application/json"
+#        )
+#    else:
+#        return HttpResponse(
+#            json.dumps({"nothing to see": "this isn't happening"}),
+#            content_type="application/json"
+#        )
 
 
 def successView(request):
     context_dict = {}
     return render(request, "tatu/success.html", context=context_dict)
 
+
+# This is the main view for displaying posts for every category
 def tattoos(request, category):
     context_dict = {}
 
-    try:
-        # Get the enum name e.g. URL reads 'traditional' becomes enum name 'TRADITIONAL'
-        category_enum = category.upper()
-        
-        # Get all the posts associated with this category
-        img = Post.objects.all().filter(category=category_enum)
-        
-        # Get the current users User object
-        current = request.user
+    # Get the enum name e.g. URL reads 'traditional' becomes enum name 'TRADITIONAL'
+    category_enum = [ i[0] for i in Post.CATEGORIES if i[1] == category.title() ][0]
 
-        context_dict['current'] = current
-        context_dict['img'] = img
-        context_dict['category'] = category
+    # Get all the posts objects associated with this category (All posts made under Traditional
+    # for example)
+    img = Post.objects.all().filter(category=category_enum)
 
-        # Get the comment form for the current post
-        if request.method == 'POST':
-            comment_form = CommentForm(data=request.POST)
-            postnum = list(request.POST.keys())[2][3:]
-            currentp = Post.objects.get(pk=postnum)
+    # Get the current users User object
+    current = request.user
 
-            if comment_form.is_valid():
-                comment = comment_form.save(commit=False)
-                comment.thread = currentp
-                comment.poster = request.user.userprofile
-                comment.save()
-            else:
-                print(comment_form.errors)
+    context_dict['current'] = current
+    context_dict['img'] = img
+    context_dict['category'] = category
+
+    # If a POST request has been made a via a form
+    if request.method == 'POST':
+
+        # Load the comment form with extra information from the POST data dictionary of the request
+        comment_form = CommentForm(data=request.POST)
+
+        # This searches the POST dictionary for the 3rd item, the name field of the 
+        # <input type=submit ... button, and grabs it, which contains the post ID
+        postnum = list(request.POST.keys())[2]
+
+        # Get the Post object associated with the ID we just got, as that's the Post we want
+        # to reply to
+        currentp = Post.objects.get(pk=postnum)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+
+            # Save the thread the comment is replying to to be the Post object
+            comment.thread = currentp
+
+            # Save the author of this comment to be the current user (specifically the UserProfile
+            # Associated with that user, so that we can get avatars etc)
+            comment.poster = request.user.userprofile
+            comment.save()
         else:
-            comment_form = CommentForm()
-        for i in img:
-            i.coms = Comment.objects.all().filter(thread=i)
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm()
+        
+    context_dict['comment_form'] = comment_form
 
-    return render(request, 
-                  'tatu/category.html',
-                  context=context_dict})
+    for i in img:
+        i.coms = Comment.objects.all().filter(thread=i)
+
+    return render(request, 'tatu/category.html',
+                  context=context_dict)
 
