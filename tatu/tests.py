@@ -3,9 +3,11 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.staticfiles import finders
 
+from tatu.models import *
 from django.contrib.auth.models import User
-from tatu.models import UserProfile, Post, Comment
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.exceptions import ValidationError
+from django.test import Client
 
 class StaticFileTests(TestCase):
     # the return value of finders.find(<filepath>) is not NONE if static file loads correctly
@@ -88,6 +90,7 @@ class TattoosPageTests(TestCase):
 class ModelTests(TestCase):
 
     def setUp(self):
+
         MEDIA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media')
 
         u1 = User.objects.create_user('John', 'lennon@thebeatles.com', 'johnpassword')
@@ -107,20 +110,24 @@ class ModelTests(TestCase):
 
         Comment.objects.create(thread=post, poster=p2, text='Incredible!')
 
+        Like.objects.create(user=u2, post=post)
+
     def test_profile_user_relationship(self):
         # ensure Ringo's user instance is associated with his UserProfile instance
         try:
             ringo_profile = UserProfile.objects.get(website='starr.com')
             User.objects.get(userprofile=ringo_profile)
         except:
-            self.fail("Profile creation is dysfunctional.")
+            self.fail('Profile creation is dysfunctional.')
 
     def test_post_creation_successful(self):
         # ensure John's post was created by checking its existence
         try:
             Post.objects.get(author=User.objects.get(username='John'))
         except Post.DoesNotExist:
-            self.fail('Post creation is dysfunctional.')
+            self.fail('Post has not been properly created')
+        except:
+            self.fail('Something a bit weird went wrong in post creation')
 
     def test_comment_creation_successful(self):
         # ensure Ringo's comment on John's post was created by checking its existence
@@ -129,6 +136,89 @@ class ModelTests(TestCase):
             profile = UserProfile.objects.get(user=ringo)
             post = Post.objects.get(author=User.objects.get(username='John'))
             Comment.objects.get(thread=post, poster=profile)
+        except Comment.DoesNotExist:
+            self.fail('Comment has not been properly created')
         except:
-            self.fail("Comment creation is dysfunctional.")
+            self.fail('Something a bit weird went wrong in comment creation')
+
+    def test_like_creation_successful(self):
+        # ensure Ringo liking John's post was successful by checking for its existence
+        try:
+            ringo = User.objects.get(username='Ringo')
+            post = Post.objects.get(author=User.objects.get(username='John'))
+            Like.objects.get(user=ringo, post=post)
+        except Like.DoesNotExist:
+            self.fail('Like has not been properly created')
+        except:
+            self.fail('Something a bit weird went wrong in like creation')
+
+    def test_profile_workplace_max_length(self):
+        # ensure no profile can have a workplace longer than 100chars
+        # test this by trying to alter John's workplace
+        with self.assertRaises(ValidationError):
+            workplace = 'a'*101
+            print(workplace)
+            john = User.objects.get(username='John')
+            profile = UserProfile.objects.get(user=john)
+            profile.workplace = workplace
+            profile.save()
+
+
+
+class FormTests(TestCase):
+
+    def setUp(self):
+        try:
+            from forms import CommentForm
+            from forms import PostForm
+        except ImportError:
+            print('The module forms does not exist')
+        except NameError:
+            print('One of the form classes are non-existent or incorrect')
+        except:
+            print('Something freaky went wrong yee-ha')
+
+# miscellaneous tests?
+class MiscellaneousTests(TestCase):
+
+    def test_login_works(self):
+        # creates user, then attempts to log in using those credentials
+        user = User.objects.create_user(username='test_user')
+        user.set_password('thisismypassword')
+        user.save()
+
+        c = Client()
+        logged_in = c.login(username='test_user', password='thisismypassword')
+        self.assertTrue(logged_in)
+
+"""
+## IS ANY OF THIS NECESSARY? ##
+
+class PopScriptTests(TestCase):
+
+    def setUp(self):
+        try:
+            from population_script import populate
+            populate()
+        except ImportError:
+            print('The population_script module does not exist')
+        except NameError:
+            print('The function populate() either does not exist or is incorrect')
+        except:
+            print('Something funky went wrong in the populate() function')
+
+    usernames = ['xo_g1ve_m3_h0p3_xo', 'jezza32', 'pizzagirl82', 'bronzedidol', 'miss.sporty132',
+                 'solarsparkle', 'tattooking', 'iHeartCookies', 'ToTaLeClipse', 'showstopper']
+"""
+
+
+# POTENTIAL TESTS
+
+"""
+# test_<page>_contains_img (checks the page contains an image)
+response = self.client.get(reverse('<page>'))
+self.assertIn('img', response.content)
+"""
+
+#assertRedirects is a thing
 
