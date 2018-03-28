@@ -1,24 +1,26 @@
+console.log("main.js loaded")
+
 // Submit comment on submit
 $('#comment_form').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")  // sanity check
     create_comment();
+	console.log("asdfghjhgfdssdfgh!")  // sanity check
+	event.preventDefault();
+	
 });
 
 // AJAX for posting
 function create_comment() {
+	var comment = $('#comment-text').val();
     console.log("create comment is working!") // sanity check
     $.ajax({
         url : "", // the endpoint
         type : "POST", // http method
-        data : { the_comment : $('#comment-text').val() }, // data sent with the post request
+        data : { the_comment : comment }, // data sent with the post request
 
         // handle a successful response
-	success : function(json) {
+	success : function() {
 		$('#comment-text').val(''); // remove the value from the input
-		console.log(json); // log the returned json to the console
-		$("#talk").prepend("<li><strong>"+json.text+"</strong> - <em> "+json.author+"</em> - <span> "+json.created+"</span></li>");
-		console.log("success"); // another sanity check
+		$("#talk").append('<p><a href="/tatu/profile/10/"><img class="img-circle" src="/media/showstopper/avatar/avatar_T3ORXUd.jpg" alt="fuc" width="30" height="30"></a>' + comment + '</p><br>');
 	},
 
         // handle a non-successful response
