@@ -20,7 +20,7 @@ function create_comment() {
         // handle a successful response
 	success : function() {
 		$('#comment-text').val(''); // remove the value from the input
-		$("#talk").append('<p><a href="/tatu/profile/10/"><img class="img-circle" src="/media/showstopper/avatar/avatar_T3ORXUd.jpg" alt="fuc" width="30" height="30"></a>' + comment + '</p><br>');
+		$("#talk").append('<p><a href="/tatu/profile/10/"><img class="img-circle" src="/media/showstopper/avatar/avatar_T3ORXUd.jpg" width="30" height="30"></a>' + comment + '</p><br>');
 	},
 
         // handle a non-successful response
