@@ -20,7 +20,7 @@
         <div class="reg">thank you for registering!
         <a href="{% url 'index' %}">Return to the homepage</a><br /></div>
     {% else %}
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
 
         {% csrf_token %}
             <div class="right">{% for field in user_form %}

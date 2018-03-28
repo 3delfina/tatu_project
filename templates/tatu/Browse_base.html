@@ -75,23 +75,7 @@
 </div>
 
 
-<div>
-    
-{% if current.id != userid %}
-    {% if other in favs %}
-        <p>You've favourited this person!!</p>
-    {% else %}
-        <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="submit" class="btn" value="Favourite!" name="fav">
-        </form>
-    {% endif %}
-{% else %}
-    {% for fav in favs %}
-        <li><a href='{% url 'profile' fav.id %}'>{{ fav.username }}</a></li>
-    {% endfor %}
-{% endif %}
-</div>
+
 
 
 
