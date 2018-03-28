@@ -2,3 +2,7 @@
 db.sqlite3
 .idea/
 media/user_*/
+tatu/migrations/
+tatu/migrations/0001_initial.py
+
+tatu/migrations/0001_initial.py
