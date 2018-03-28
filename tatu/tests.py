@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ValidationError
 from django.test import Client
+from tatu.forms import UserForm
 
 
 class StaticFileTests(TestCase):
@@ -56,13 +57,6 @@ class TemplateTests(TestCase):
     def test_artists_using_template(self):
         response = self.client.get(reverse('artists'))
         self.assertTemplateUsed(response, 'tatu/artists.html')
-
-
-class TattoosPageTests(TestCase):
-
-    def test_profile_using_template(self):
-        response = self.client.get(reverse('tattoos'))
-        self.assertTemplateUsed(response, 'tatu/Browse_base.html')
 
 
 class ModelTests(TestCase):
@@ -147,16 +141,39 @@ class ModelTests(TestCase):
 
 class FormTests(TestCase):
 
+    """
     def setUp(self):
         try:
-            from forms import CommentForm
-            from forms import PostForm
+            from forms import UserForm
         except ImportError:
             print('The module forms does not exist')
         except NameError:
-            print('One of the form classes are non-existent or incorrect')
+            print('One of the form names, spelled as they currently are, do not exist')
         except:
             print('Something freaky went wrong yee-ha')
+    """
+
+    def test_valid_user_form(self):
+        u = User.objects.create(username="test_dude", password='yikeroonis')
+        data = {'username': u.username, 'password': u.password}
+        form = UserForm(data=data)
+        self.assertTrue(form.is_valid())
+
+    def test_valid_profile_form(self):
+        p = UserProfile.objects.create()
+
+
+def test_valid_form(self):
+    w = Whatever.objects.create(title='Foo', body='Bar')
+    data = {'title': w.title, 'body': w.body,}
+    form = WhateverForm(data=data)
+    self.assertTrue(form.is_valid())
+
+def test_invalid_form(self):
+    w = Whatever.objects.create(title='Foo', body='')
+    data = {'title': w.title, 'body': w.body,}
+    form = WhateverForm(data=data)
+    self.assertFalse(form.is_valid())
 
 
 class OtherTests(TestCase):
