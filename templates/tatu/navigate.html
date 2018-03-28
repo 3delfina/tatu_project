@@ -15,15 +15,26 @@
 
 
 <body>
-<div class="navi">
-
-{% for category in category_list %}
-    <a href='{% url 'tattoos' category %}'>| {{ category }} |</a>
-{% endfor %}
-    <a href="{% url 'index' %}">| back to index |</a>
 
 
-</div>
+    <div class="dropdown">
+        <button class="dropbtn"><img src="{% static "images/menu.png" %} " alt="logo" width="100%"></button>
+        <div class="dropdown-content">
+
+
+            {% for category in category_list %}
+            <a href='{% url 'tattoos' category %}'> {{ category }} </a>
+            {% endfor %}
+            <a href="{% url 'index' %}">Index </a>
+
+        </div>
+    </div>
+
+
+
+
+
+
 </body>
 
 </html>

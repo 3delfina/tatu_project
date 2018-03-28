@@ -18,7 +18,7 @@ html,body {
     background: transparent;
     display: inline;
     font-family: Arial;
-    font-size: 20px;
+    font-size: 10px;
     font-size: 2vw;
     text-align: center;
     text-transform: uppercase;
@@ -28,28 +28,48 @@ html,body {
 
 
 }
-a:link {
+
+
+.dropbtn {
+    background-color: transparent;
     color: #c13399;
-    text-decoration: none;
+    width: 5%;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-family: Arial;
+    text-transform: uppercase;
+
 }
 
-
-/* visited link */
-a:visited {
-    color: #c13399;
-    text-decoration: none;
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-
-/* mouse over link */
-a:hover {
-    color: #c13399;
-    text-decoration: none;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    text-transform: uppercase;
 }
 
-
-/* selected link */
-a:active {
-    color: #c13399;
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
     text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: transparent;
 }

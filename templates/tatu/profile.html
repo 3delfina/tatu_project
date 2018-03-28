@@ -15,30 +15,52 @@
 
 
 <body>
+<div class="dropdown">
+    <button class="dropbtn"><img src="{% static "images/menu.png" %} " alt="logo" width="100%"></button>
+    <div class="dropdown-content">
+
+
+        <a href='/tatu/navigate/'>Tattoos </a>
+        <a href='/tatu/contact-us/'>Contact us</a>
+        <a href="{% url 'index' %}">Index </a>
+    </div>
+</div>
+
 <div class="top_zone">
     <div class="col-sm-3"><img class="img-circle"  src="{{profile.userprofile.avatar.url}}" alt="fuc" width="100px"height="100px"></a></div>
     <div class="col-sm-5">
-        <div class="row">{{profile}}
+        <div class="row">
         {% if current.id == userid %}
+            <div class="dropdown">
+                <button class="dropbtn">{{profile}}</button>
+                <div class="dropdown-content">
+                    <a href='/tatu/upload/'>Upload new picture </a>
 
 
-            |   <a href='/tatu/upload/'>Upload new picture </a>
+                </div>
+            </div>
 
 
         {% endif %}</div>
 
-        <div class="row">{{profile.first_name}}</div>
-        <div class="row"> <a href="{% url 'index' %}">Back to index </a></div>
+
+
         <div class="row">{% if current.id != userid %}
+            {{other}}
 
     {% if other in favs %}
-    <p>You've favourited this person!!</p>
+            <img src="{% static "images/fav.png" %} " alt="heart" width="10%">
     {% else %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="submit" class="btn" value="Favourite!" name="fav">
+        <input type="submit" class="btn" value="Add Artist To Your favorites" name="fav">
+
     </form>
+
     {% endif %}
+            <p>Website: {{other.website}}<br>
+            Name: {{profile.first_name}} {{profile.last_name}}</p>
+
     {% else %}
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{i.id}}"> My favorites</button>
             <!-- Modal -->
@@ -56,7 +78,7 @@
                         </div>
                         <div class="modal-body">
                             {% for fav in favs %}
-                            <a href='{% url 'profile' fav.id %}'>{{ fav}}</a>
+                            <a href='{% url 'profile' fav.id %}'>{{ fav}}</a><br>
 
                             {% endfor %}
                         </div>
