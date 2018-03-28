@@ -333,3 +333,19 @@ def profile(request, userid):
     return render(request, 'tatu/profile.html',
                   context=context_dict)
 
+
+
+def update_comment_and_likes(request):
+    if request.method == "POST":
+        what = request.POST.get('what')
+        if what == "comment":
+            id = request.POST.get('id')
+            comment = request.POST.get('comment')
+            # update the comment and return a json object with status as 'success' or 'failure' and a comment object
+            pass
+        elif what == "like":
+            id = request.POST.get('id')            
+            # update the like and return 'liked' or 'unliked' i.e. if already there inside the liked then it dislikes otherwise liked
+            pass
+        else:
+            return HttpResponse("error")

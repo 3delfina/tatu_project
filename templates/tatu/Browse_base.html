@@ -51,18 +51,18 @@
 					</ul>
                 </div>
                 <div class="modal-footer">
-                    <p><form id="comment_form" method="post" action="." enctype="multipart/form-data">
+                    <p><form class="btn comment-button" id="comment_form" enctype="multipart/form-data">
                         {% csrf_token %}
 
                         {{ comment_form.as_p }}
 
-                        <input type="submit" name="com{{i.id}}" value="Submit">
+                        <input type="submit" name="com{{i.id}}" value="Submit" data-id="{{i.id}}">
                     </form></p>
-                    <form method="post" enctype="multipart/form-data">
+                    <form enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input type="submit" class="btn" value="Like!" name="lke{{i.id}}">
+                        <input type="submit" class="btn like-button" value="Like!" name="like{{i.id}}" data-num="{{i.likes}}" data-id="{{i.id}}">
                     </form>
-                    <p>Likes : {{i.likes}}</p>
+                    <p class="likes">Likes : {{i.likes}}</p>
 
                 </div>
             </div>
@@ -75,11 +75,26 @@
 </div>
 
 
+<div>
+    
+{% if current.id != userid %}
+    {% if other in favs %}
+        <p>You've favourited this person!!</p>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" class="btn" value="Favourite!" name="fav">
+        </form>
+    {% endif %}
+{% else %}
+    {% for fav in favs %}
+        <li><a href='{% url 'profile' fav.id %}'>{{ fav.username }}</a></li>
+    {% endfor %}
+{% endif %}
+</div>
 
 
-
-
-
+    <link rel="stylesheet" type="text/js" href="{% static "js/category.js" %}">
 
 </body>
 

@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^upload/$', views.user_post, name='upload'),
     url(r'^success/$', views.successView, name='success'),
     url(r'^(?P<category>[-\w]+)/$', views.tattoos, name='tattoos'),
+    url(r'^update/$', views.update_comment_and_likes, name='update'),    
 ]

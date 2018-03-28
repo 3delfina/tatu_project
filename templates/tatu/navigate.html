@@ -18,9 +18,8 @@
 <div class="navi">
 
 {% for category in category_list %}
-    <a href='{% url 'tattoos' category %}'>| {{ category }} |</a>
+    <a href='{% url 'tattoos' category %}'>{{ category }}</a>
 {% endfor %}
-    <a href="{% url 'index' %}">| back to index |</a>
 
 
 </div>

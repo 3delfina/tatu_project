@@ -33,7 +33,7 @@ SECRET_KEY = 'l_jk%42e#r##u^2k21*en(!nlsvkhcdwm&$d27lgkw*l2c1$*9'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['rosscee98.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','rosscee98.pythonanywhere.com','127.0.0.1']
 
 
 
