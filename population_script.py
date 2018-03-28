@@ -121,7 +121,6 @@ def populate():
 
 # each set of posts is attributed to a specific user.
 # each user has an associated list of posts they've created.
-# ISSUE: remember to sort the dates!
 
     posts = {
         "xo_g1ve_m3_h0p3_xo": [
@@ -382,7 +381,7 @@ def add_user(entry):
                                     first_name=entry["first_name"],
                                     last_name=entry["last_name"],
                                     password=entry["password"],
-                                    email=entry["password"])
+                                    email=entry["email"])
     user.save()
     return user
 
@@ -411,10 +410,7 @@ def add_post(user, dict):
     post = Post.objects.get_or_create(author=user,
                                       category=dict["category"],
                                       image=image,
-                                      description=dict["description"],
-                                      date=dict["date"],
-                                      #likes=dict["likes"])[0]
-                                      )[0]
+                                      description=dict["description"])[0]
     post.save()
     return post
 
@@ -423,7 +419,6 @@ def add_comment(info):
     user_profile = UserProfile.objects.get(user=user)
     post = Post.objects.get(id=info["post_id"])
 
-    # ISSUE: must add date to get_or_create function - override auto_add_now in DateTimeField
     comment, aaa = Comment.objects.get_or_create(thread=post,
                                                  poster=user_profile,
                                                  text=info["text"])
