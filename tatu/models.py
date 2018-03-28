@@ -86,6 +86,10 @@ class Post(models.Model):
     
     description = models.CharField(max_length=280)
     date = models.DateField(auto_now_add=True)
+    likes = models.IntegerField(default=0)
+    def __str__(self):
+        return "(#{0}) {1}: {2}".format(self.id, self.author.username, self.description[0:120])
+
 
 
 class Like(models.Model):
@@ -94,12 +98,7 @@ class Like(models.Model):
                              )
     post = models.ForeignKey(Post, 
                              on_delete=models.CASCADE, 
-                             related_name='likes',)
-
-
-    def __str__(self):
-        return "(#{0}) {1}: {2}".format(self.id, self.author.username, self.description[0:120])
-
+                             )
 
 # The Comment model: Every comment must have an author, text, date, and
 #                    many comments may belong to only one Post and many

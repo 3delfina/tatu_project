@@ -56,8 +56,12 @@
 
                         {{ comment_form.as_p }}
 
-                        <input type="submit" name="{{i.id}}" value="Submit">
+                        <input type="submit" name="com{{i.id}}" value="Submit">
                     </form></p>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="submit" class="btn" value="Like!" name="lke{{i.id}}">
+                    </form>
                     <p>Likes : {{i.likes}}</p>
 
                 </div>

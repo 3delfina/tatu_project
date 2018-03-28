@@ -7,5 +7,6 @@ class PhotoAdmin(admin.ModelAdmin):
     admin_thumbnail = AdminThumbnail(image_field='avatar')
 
 admin.site.register(Post)
+admin.site.register(Like)
 admin.site.register(Comment)
 admin.site.register(UserProfile, PhotoAdmin)

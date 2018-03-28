@@ -214,25 +214,39 @@ def tattoos(request, category):
     context_dict['img'] = img
     context_dict['category'] = category
 
+    # If a POST request has been made and the POST data contains 'lke' in its keys 
+    if request.method == 'POST' and any(item.startswith('lke') for item in list(request.POST.keys())):
+        
+        # Get the Post object number from the POST data
+        postnum = [i for i in list(request.POST.keys()) if i.startswith('lke')][3:]
+        
+        postobj = Post.objects.get(pk=postnum)
+
+        new_like, created = Like.objects.get_or_create(user=request.user, post=postobj)
+        if not created:
+            print("Error like already made")
+        else:
+            postobj.likes = postobj.like_set.all().count()
+
     # If a POST request has been made a via a form
-    if request.method == 'POST':
+    if request.method == 'POST' and any(item.startswith('com') for item in list(request.POST.keys())):
 
         # Load the comment form with extra information from the POST data dictionary of the request
         comment_form = CommentForm(data=request.POST)
 
         # This searches the POST dictionary for the 3rd item, the name field of the 
         # <input type=submit ... button, and grabs it, which contains the post ID
-        postnum = list(request.POST.keys())[2]
+        postnum = [i for i in list(request.POST.keys()) if i.startswith('com')][3:]
 
         # Get the Post object associated with the ID we just got, as that's the Post we want
         # to reply to
-        currentp = Post.objects.get(pk=postnum)
+        postobj = Post.objects.get(pk=postnum)
 
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
 
             # Save the thread the comment is replying to to be the Post object
-            comment.thread = currentp
+            comment.thread = postobj
 
             # Save the author of this comment to be the current user (specifically the UserProfile
             # Associated with that user, so that we can get avatars etc)
@@ -245,8 +259,11 @@ def tattoos(request, category):
         
     context_dict['comment_form'] = comment_form
 
+    # SUM CRISSIE BS
     for i in img:
         i.coms = Comment.objects.all().filter(thread=i)
+        i.likes = i.like_set.all().count()
+
 
     return render(request, 'tatu/category.html',
                   context=context_dict)
